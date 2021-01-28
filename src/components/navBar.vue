@@ -34,7 +34,12 @@
 import Vue from 'vue';
 import { mapMutations } from 'vuex';
 
-export default Vue.extend({
+interface NavBarState {
+  drawer: boolean;
+  group: null;
+}
+
+export default Vue.extend<NavBarState, {}, {}, {}>({
   data: () => ({
     drawer: false,
     group: null,
@@ -50,7 +55,6 @@ export default Vue.extend({
 
 <style>
 .nav-bar {
-  margin: 0 auto;
-  margin-top: 3rem;
+  margin: 3rem auto 0;
 }
 </style>

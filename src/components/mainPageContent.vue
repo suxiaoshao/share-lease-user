@@ -77,7 +77,14 @@
 <script lang="ts">
 import Vue from 'vue';
 
-export default Vue.extend({
+interface MainPageContentState {
+  colors: string[];
+  slides: string[];
+  alignments: string[];
+  items: { src: string }[];
+}
+
+export default Vue.extend<MainPageContentState, {}, {}, {}>({
   name: 'mainPageContent',
   data: () => ({
     colors: ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4'],
@@ -107,8 +114,7 @@ export default Vue.extend({
 
 <style>
 .main-page {
-  margin: 0 auto;
-  margin-top: 1vh;
+  margin: 1vh auto 0;
 }
 
 .carousel-wrapper {
@@ -131,7 +137,6 @@ export default Vue.extend({
 
 .content-bottom .bottom-right-viwer {
   width: 48%;
-  padding: 1rem;
-  padding-top: 0;
+  padding: 0 1rem 1rem;
 }
 </style>

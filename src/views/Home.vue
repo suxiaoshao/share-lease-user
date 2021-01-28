@@ -1,18 +1,48 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <v-app color="black" style="width: 100vw">
+    <navBar class="normal-setting"></navBar>
+    <mainPageContent class="normal-setting"></mainPageContent>
+  </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import navBar from '../components/navBar.vue';
+import mainPageContent from '../components/mainPageContent.vue';
 
-export default Vue.extend({
+interface HomeState {
+  showOverlay: boolean;
+}
+
+export default Vue.extend<HomeState, {}, {}, {}>({
   name: 'Home',
+
   components: {
-    HelloWorld,
+    navBar,
+    mainPageContent,
+  },
+  data: () => ({
+    showOverlay: false,
+  }),
+
+  watch: {
+    showOverlay: function () {
+      window.setTimeout(() => {
+        this.showOverlay = false;
+      }, 2000);
+    },
   },
 });
 </script>
+
+<style>
+.normal-setting {
+  width: 70%;
+}
+
+@media screen and (max-device-width: 1260px) {
+  .normal-setting {
+    width: 100%;
+  }
+}
+</style>
