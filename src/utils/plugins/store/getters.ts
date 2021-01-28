@@ -1,9 +1,13 @@
 import { GetterTree } from 'vuex';
 import { State } from './state';
 
-const getters: GetterTree<State, any> = {
+interface GetterProp {
+  leftBarState: boolean;
+}
+
+const getters: GetterTree<State, GetterProp> = {
   // 侧边栏状态
-  leftBarState(state: any): void {
+  leftBarState(state: State): boolean {
     return state.leftBarState;
   },
 };

@@ -1,8 +1,11 @@
 import { State } from './state';
+import { MutationTree } from 'vuex';
 
-export default {
+const mutations: MutationTree<State> = {
   openLeftBar(state: State): void {
     state.leftBarState = !state.leftBarState;
     console.log(state.leftBarState);
   },
 };
+
+export default mutations;
