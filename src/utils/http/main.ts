@@ -16,20 +16,28 @@ export interface HttpErrorData {
 
 export type HttpData<T> = HttpSuccessData<T> | HttpErrorData;
 
-export async function httpBase<Req, Res>(method: 'get' | 'post', url: string, data: Req): Promise<Res> {
+export async function httpBase<Req, Res>(method: 'get' | 'post' | 'put', url: string, data: Req): Promise<Res> {
   let resData: AxiosResponse<HttpData<Res>>;
-  if (method === 'get') {
-    resData = await axios
-      .get<HttpData<Res>>(url, {
-        params: data,
-      })
-      .catch(() => {
+  switch (method) {
+    case 'get':
+      resData = await axios
+        .get<HttpData<Res>>(url, {
+          params: data,
+        })
+        .catch(() => {
+          throw '网络错误';
+        });
+      break;
+    case 'post':
+      resData = await axios.post<HttpData<Res>>(url, data).catch(() => {
         throw '网络错误';
       });
-  } else {
-    resData = await axios.post<HttpData<Res>>(url, data).catch(() => {
-      throw '网络错误';
-    });
+      break;
+    case 'put':
+      resData = await axios.put<HttpData<Res>>(url, data).catch(() => {
+        throw '网络错误';
+      });
+      break;
   }
   if (resData.data.status === 0) {
     return resData.data.data;
@@ -43,4 +51,8 @@ export async function httpGet<Req, Res>(url: string, data: Req): Promise<Res> {
 
 export async function httpPost<Req, Res>(url: string, data: Req): Promise<Res> {
   return await httpBase<Req, Res>('post', url, data);
+}
+
+export async function httpPut<Req, Res>(url: string, data: Req): Promise<Res> {
+  return await httpBase<Req, Res>('put', url, data);
 }
