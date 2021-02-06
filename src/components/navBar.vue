@@ -1,15 +1,13 @@
 <template>
   <!-- 导航栏 -->
   <div class="nav-bar">
-    <v-app-bar color="white" light flat>
-      <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+    <v-app-bar app dark>
+      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>
-        <h2>SHARE LEASE USER</h2>
-      </v-toolbar-title>
+      <v-toolbar-title>SHARE LEASE USER</v-toolbar-title>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer app v-model="drawer" fixed temporary>
       <v-list nav dense>
         <v-list-item-group v-model="group" active-class="deep-purple--text text--accent-4">
           <v-list-item>
@@ -22,7 +20,13 @@
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>Account</v-list-item-title>
+            <userAccount></userAccount>
+          </v-list-item>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon>mdi-rename-box</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Profile</v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
@@ -33,6 +37,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapMutations } from 'vuex';
+import userAccount from '../components/userAccount.vue';
 
 interface NavBarState {
   drawer: boolean;
@@ -46,6 +51,10 @@ export default Vue.extend<NavBarState, {}, {}, {}>({
   }),
 
   watch: {},
+
+  components: {
+    userAccount,
+  },
 
   methods: {
     ...mapMutations(['openLeftBar']),
