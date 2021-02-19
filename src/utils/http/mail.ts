@@ -1,10 +1,10 @@
 import { httpGet } from '@/utils/http/main';
 
-export interface mailRetMes {
-  status: string;
+export interface MailRetMes {
+  status: number;
   message: string;
 }
 
-export async function mail(email: string): Promise<mailRetMes> {
-  return await httpGet<undefined, mailRetMes>(`/user/register/mail?email=${email}`, undefined);
+export async function mail(email: string): Promise<MailRetMes> {
+  return await httpGet<undefined, MailRetMes>(`/user/register/mail?email=${email}`, undefined);
 }

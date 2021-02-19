@@ -1,5 +1,5 @@
 <template>
-  <v-app color="black" style="width: 100vw">
+  <v-app color="black" style="width: 100vw" id="v-app-root">
     <navBar class="normal-setting"></navBar>
     <mainPageContent class="normal-setting"></mainPageContent>
   </v-app>
