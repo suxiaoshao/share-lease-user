@@ -45,6 +45,7 @@
     <v-card-actions>
       <v-btn color="primary" large @click="registerAccount">注册</v-btn>
     </v-card-actions>
+    <my-snackbar v-model="message"></my-snackbar>
   </v-tab-item>
 </template>
 
@@ -52,44 +53,91 @@
 import Vue from 'vue';
 import { sendMailCode } from '@/utils/http/sendMailCode';
 import { register } from '@/utils/http/register';
+import MySnackbar, { Message } from '@/components/common/mySnackbar.vue';
 
 interface RegisterState {
+  /**
+   * 用户名
+   * */
   name: string;
+  /**
+   * 密码
+   * */
   password: string;
+  /**
+   * 邮箱
+   * */
   email: string;
+  /**
+   * 验证码
+   * */
   code: string;
+  /**
+   * 消息条
+   * */
+  message: Message;
 }
 
 interface RegisterMethod {
+  /**
+   * 获取验证码
+   * */
   sendCode(): void;
 
+  /**
+   * 注册
+   * */
   registerAccount(): void;
+
+  /**
+   * 打开消息条
+   * */
+  openMessage(message: string): void;
 }
 
 export default Vue.extend<RegisterState, RegisterMethod, {}, {}>({
   name: 'register',
+  components: { MySnackbar },
   data(): RegisterState {
     return {
       name: '',
       password: '',
       email: '',
       code: '',
+      message: {
+        message: '',
+        open: false,
+      },
     };
   },
   methods: {
     sendCode(): void {
       sendMailCode(this.email)
-        .then()
-        .catch((res) => {
+        .then(() => {
+          this.openMessage('成功发送验证码');
+        })
+        .catch((res: Error) => {
           console.log(res);
+          this.openMessage(res.message);
         });
     },
     registerAccount(): void {
       register(this.name, this.password, this.email, this.code)
-        .then()
-        .catch((message) => {
-          console.log(message);
+        .then((res) => {
+          console.log(res);
+          this.openMessage('成功注册');
+          this.$emit('ok');
+        })
+        .catch((res: Error) => {
+          console.log(res);
+          this.openMessage(res.message);
         });
+    },
+    openMessage(message: string): void {
+      this.message = {
+        message,
+        open: true,
+      };
     },
   },
 });

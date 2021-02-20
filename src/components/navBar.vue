@@ -16,11 +16,12 @@
             </v-text-field>
           </v-list-item>
 
-          <v-list-item>
+          <userAccount v-if="!$store.getters.isLogin"></userAccount>
+          <v-list-item v-else>
             <v-list-item-icon>
               <v-icon>mdi-account</v-icon>
             </v-list-item-icon>
-            <userAccount></userAccount>
+            账户信息
           </v-list-item>
           <v-list-item>
             <v-list-item-icon>
@@ -36,7 +37,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { mapMutations } from 'vuex';
 import userAccount from './userAccount/userAccount.vue';
 
 interface NavBarState {
@@ -54,10 +54,6 @@ export default Vue.extend<NavBarState, {}, {}, {}>({
 
   components: {
     userAccount,
-  },
-
-  methods: {
-    ...mapMutations(['openLeftBar']),
   },
 });
 </script>

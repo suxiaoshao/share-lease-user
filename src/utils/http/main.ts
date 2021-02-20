@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://software.remotehost.icu';
@@ -24,20 +24,29 @@ export async function httpBase<Req, Res>(method: 'get' | 'post' | 'put', url: st
         .get<HttpData<Res>>(url, {
           params: data,
         })
-        .catch((err) => {
+        .catch((err: AxiosError<HttpData<Res>>) => {
           console.log(err);
+          if (err.response) {
+            throw new Error(err.response.data.message);
+          }
           throw new Error('网络错误');
         });
       break;
     case 'post':
-      resData = await axios.post<HttpData<Res>>(url, data).catch((err) => {
+      resData = await axios.post<HttpData<Res>>(url, data).catch((err: AxiosError<HttpData<Res>>) => {
         console.log(err);
+        if (err.response) {
+          throw new Error(err.response.data.message);
+        }
         throw new Error('网络错误');
       });
       break;
     case 'put':
-      resData = await axios.put<HttpData<Res>>(url, data).catch((err) => {
+      resData = await axios.put<HttpData<Res>>(url, data).catch((err: AxiosError<HttpData<Res>>) => {
         console.log(err);
+        if (err.response) {
+          throw new Error(err.response.data.message);
+        }
         throw new Error('网络错误');
       });
       break;

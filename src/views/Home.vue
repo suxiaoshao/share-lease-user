@@ -8,7 +8,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import navBar from '../components/navBar.vue';
-import mainPageContent from '../components/mainPageContent.vue';
+import mainPageContent from '../components/home/mainPageContent.vue';
 
 interface HomeState {
   showOverlay: boolean;

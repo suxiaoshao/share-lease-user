@@ -39,6 +39,7 @@
     <v-card-actions>
       <v-btn color="primary" large @click="reset">重设</v-btn>
     </v-card-actions>
+    <my-snackbar v-model="message"></my-snackbar>
   </v-tab-item>
 </template>
 
@@ -46,44 +47,83 @@
 import Vue from 'vue';
 import { resetPwdMail } from '@/utils/http/resetPwdMail';
 import { resetPassword } from '@/utils/http/resetPassword';
+import MySnackbar, { Message } from '@/components/common/mySnackbar.vue';
 
 interface ForgetState {
+  /**
+   * 邮箱
+   * */
   email: string;
+  /**
+   * 验证码
+   * */
   code: string;
+  /**
+   * 新密码
+   * */
   password: string;
+  /**
+   * 消息条消息
+   * */
+  message: Message;
 }
 
 interface ForgetMethod {
+  /**
+   * 获取验证码
+   * */
   sendCode(): void;
 
+  /**
+   * 重设密码
+   * */
   reset(): void;
+
+  /**
+   * 打开消息条
+   * */
+  openMessage(message: string): void;
 }
 
 export default Vue.extend<ForgetState, ForgetMethod, {}, {}>({
   name: 'forget',
+  components: { MySnackbar },
   data(): ForgetState {
     return {
       email: '',
       code: '',
       password: '',
+      message: { message: '', open: false },
     };
   },
   methods: {
     sendCode() {
       resetPwdMail(this.email)
-        .then()
+        .then(() => {
+          this.openMessage('成功发送验证码');
+        })
         .catch((res) => {
           console.log(res);
+          this.openMessage(res.message);
         });
     },
     reset() {
       resetPassword(this.email, this.password, this.code)
         .then((res) => {
           console.log(res);
+          this.openMessage('成功重置密码');
+          this.$emit('ok');
         })
-        .catch((res) => {
+        .catch((res: Error) => {
           console.log(res);
+          this.openMessage(res.message);
         });
+    },
+    openMessage(message: string): void {
+      this.message = {
+        message,
+        open: true,
+      };
     },
   },
 });
