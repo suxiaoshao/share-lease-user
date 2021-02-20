@@ -1,12 +1,7 @@
-import { httpGet } from '@/utils/http/main';
+import { httpPut } from '@/utils/http/main';
 
-export interface ResetRetMes {
-  status: number;
-  message: string;
-}
-
-export async function resetPassword(email: string, password: string, code: string): Promise<ResetRetMes> {
-  return await httpGet<{ email: string; password: string; code: string }, ResetRetMes>(`/user/resetPassword`, {
+export async function resetPassword(email: string, password: string, code: string): Promise<undefined> {
+  return await httpPut<{ email: string; password: string; code: string }, undefined>(`/user/resetPassword`, {
     email,
     password,
     code,

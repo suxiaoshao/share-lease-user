@@ -1,13 +1,11 @@
+import { UserInfo } from '@/utils/http/getInfo';
+
 export interface State {
-  name: string;
-  total: number;
-  leftBarState: boolean;
-  postList: object[];
+  userInfo: UserInfo | null;
+  isLogin: boolean;
 }
 
 export const state: State = {
-  name: '',
-  total: 0,
-  leftBarState: false,
-  postList: [],
+  userInfo: null,
+  isLogin: false,
 };

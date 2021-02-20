@@ -24,25 +24,28 @@ export async function httpBase<Req, Res>(method: 'get' | 'post' | 'put', url: st
         .get<HttpData<Res>>(url, {
           params: data,
         })
-        .catch(() => {
-          throw '网络错误';
+        .catch((err) => {
+          console.log(err);
+          throw new Error('网络错误');
         });
       break;
     case 'post':
-      resData = await axios.post<HttpData<Res>>(url, data).catch(() => {
-        throw '网络错误';
+      resData = await axios.post<HttpData<Res>>(url, data).catch((err) => {
+        console.log(err);
+        throw new Error('网络错误');
       });
       break;
     case 'put':
-      resData = await axios.put<HttpData<Res>>(url, data).catch(() => {
-        throw '网络错误';
+      resData = await axios.put<HttpData<Res>>(url, data).catch((err) => {
+        console.log(err);
+        throw new Error('网络错误');
       });
       break;
   }
   if (resData.data.status === 0) {
     return resData.data.data;
   }
-  throw resData.data.message;
+  throw new Error(resData.data.message);
 }
 
 export async function httpGet<Req, Res>(url: string, data: Req): Promise<Res> {

@@ -37,7 +37,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { mapMutations } from 'vuex';
-import userAccount from '../components/userAccount.vue';
+import userAccount from './userAccount/userAccount.vue';
 
 interface NavBarState {
   drawer: boolean;
