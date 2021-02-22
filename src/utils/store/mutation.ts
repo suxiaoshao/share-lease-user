@@ -6,6 +6,9 @@ const mutations: MutationTree<State> = {
   login(state: State, userInfo: UserInfo) {
     state.userInfo = userInfo;
   },
+  searchGood(state: State, content: string) {
+    state.searchContent = content;
+  },
 };
 
 export default mutations;

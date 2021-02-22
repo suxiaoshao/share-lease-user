@@ -1,6 +1,9 @@
 <template>
   <div class="main-page">
     <v-container fluid>
+      <div class="search-bar-top">
+        <searchBar></searchBar>
+      </div>
       <div class="carousel-wrapper">
         <!-- 轮播图 -->
         <v-carousel cycle height="400" hide-delimiter-background show-arrows-on-hover>
@@ -81,6 +84,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import searchBar from '@/components/search/searchBar.vue';
 
 interface MainPageContentState {
   colors: string[]; // 轮播图颜色
@@ -90,6 +94,7 @@ interface MainPageContentState {
 
 export default Vue.extend<MainPageContentState, {}, {}, {}>({
   name: 'mainPageContent',
+  components: { searchBar },
   data: () => ({
     colors: ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4'],
     slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
