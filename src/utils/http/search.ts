@@ -9,8 +9,8 @@ export async function search(
   orderBY = 'price',
   min = 0,
   max = 1000,
-): Promise<GoodProp> {
-  return await httpGet<undefined, GoodProp>(
+): Promise<GoodProp[]> {
+  return await httpGet<undefined, GoodProp[]>(
     `/good/search?keyword=${keyword}&pageSize=${pageSize}&pageNum=${pageNum}&orderRule=${oderRule}&orderBY=${orderBY}&min=${min}&max=${max}`,
     undefined,
   );

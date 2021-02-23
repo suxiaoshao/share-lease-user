@@ -1,14 +1,13 @@
 <template>
-  <v-app color="black" class="page" id="v-app-root">
-    <navBar class="normal-setting"></navBar>
-    <mainPageContent class="normal-setting"></mainPageContent>
-  </v-app>
+  <main-page>
+    <home-main class="normal-setting"></home-main>
+  </main-page>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import navBar from '../components/common/navBar/navBar.vue';
-import mainPageContent from '../components/home/mainPageContent.vue';
+import homeMain from '../components/home/homeMain.vue';
+import MainPage from '@/components/common/mainPage.vue';
 
 interface HomeState {
   showOverlay: boolean;
@@ -18,20 +17,21 @@ export default Vue.extend<HomeState, {}, {}, {}>({
   name: 'Home',
 
   components: {
-    navBar,
-    mainPageContent,
+    MainPage,
+    homeMain,
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.page {
-  width: 100vw;
-  .normal-setting {
-    width: 70%;
-    @media screen and (max-width: 1260px) {
-      width: 100%;
-    }
+.normal-setting {
+  padding: 0 15% 0 15%;
+  width: 100%;
+  @media screen and (max-width: 1260px) {
+    width: 100%;
+    padding: 0;
   }
+  overflow: auto;
+  height: 100%;
 }
 </style>

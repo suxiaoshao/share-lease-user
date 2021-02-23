@@ -1,28 +1,15 @@
 <template>
-  <v-app color="black" class="page" id="v-app-root">
-    <nav-bar class="normal-setting"></nav-bar>
-  </v-app>
+  <main-page> user-info </main-page>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import NavBar from '@/components/common/navBar/navBar.vue';
+import MainPage from '@/components/common/mainPage.vue';
 
 export default Vue.extend({
   name: 'UserInfo',
-  components: { NavBar },
+  components: { MainPage },
 });
 </script>
 
-<style lang="scss" scoped>
-.page {
-  width: 100vw;
-
-  .normal-setting {
-    width: 70%;
-    @media screen and (max-width: 1260px) {
-      width: 100%;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

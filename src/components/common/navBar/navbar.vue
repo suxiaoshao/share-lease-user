@@ -1,6 +1,6 @@
 <template>
   <!-- 导航栏 -->
-  <div class="nav-bar">
+  <div>
     <v-app-bar app dark>
       <v-app-bar-nav-icon @click="drawerOpen = true"></v-app-bar-nav-icon>
 
@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Drawer from '@/components/common/navBar/drawer/drawer.vue';
+import Drawer from '@/components/common/navbar/drawer/drawer.vue';
 
 interface NavBarState {
   /**
@@ -34,11 +34,8 @@ export default Vue.extend<NavBarState, {}, {}, {}>({
   components: {
     Drawer,
   },
+  name: 'navbar',
 });
 </script>
 
-<style>
-.nav-bar {
-  margin: 3rem auto 0;
-}
-</style>
+<style></style>

@@ -1,30 +1,18 @@
 <template>
-  <v-app color="black" class="page" id="v-app-root">
-    <navBar class="normal-setting"></navBar>
+  <main-page>
     <searchResultContent></searchResultContent>
-  </v-app>
+  </main-page>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import searchResultContent from '@/components/search/searchResultContent.vue';
-import NavBar from '@/components/common/navBar/navBar.vue';
+import MainPage from '@/components/common/mainPage.vue';
 
 export default Vue.extend({
   name: 'UserInfo',
-  components: { NavBar, searchResultContent },
+  components: { MainPage, searchResultContent },
 });
 </script>
 
-<style lang="scss" scoped>
-.page {
-  width: 100vw;
-
-  .normal-setting {
-    width: 70%;
-    @media screen and (max-width: 1260px) {
-      width: 100%;
-    }
-  }
-}
-</style>
+<style lang="scss" scoped></style>

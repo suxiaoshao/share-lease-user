@@ -21,7 +21,7 @@ const routes: Array<RouteConfig> = [
     component: () => import('../../views/UserInfo.vue'),
   },
   {
-    path: '/search/*/',
+    path: '/search',
     name: 'Search',
     component: () => import('../../views/SearchResult.vue'),
   },

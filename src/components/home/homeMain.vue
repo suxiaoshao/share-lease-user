@@ -93,7 +93,7 @@ interface MainPageContentState {
 }
 
 export default Vue.extend<MainPageContentState, {}, {}, {}>({
-  name: 'mainPageContent',
+  name: 'home-main',
   components: { searchBar },
   data: () => ({
     colors: ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4'],
@@ -122,7 +122,6 @@ export default Vue.extend<MainPageContentState, {}, {}, {}>({
 
 <style>
 .main-page {
-  margin: 1vh auto 0;
 }
 
 .carousel-wrapper {
@@ -148,7 +147,7 @@ export default Vue.extend<MainPageContentState, {}, {}, {}>({
   padding: 0 1rem 1rem;
 }
 
-@media screen and (max-device-width: 1260px) {
+@media screen and (max-width: 1260px) {
   .content-bottom {
     display: block;
   }

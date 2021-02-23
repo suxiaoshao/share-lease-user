@@ -36,14 +36,12 @@ export default Vue.extend<SearchBarState, SearchBarMethod, {}, {}>({
 
   methods: {
     toSearchGoods(): void {
-      // 如果不在搜索页
-      const url: string[] = window.location.href.split('/');
-      for (let i = 0; i < url.length; i += 1) {
-        // if (url[i])
-      }
       if (this.searchContent !== '') {
         this.$router.push({
-          path: `/search/${this.searchContent}/`,
+          name: 'Search',
+          query: {
+            keyword: this.searchContent,
+          },
         });
         this.$store.commit('searchGood', this.searchContent);
       }

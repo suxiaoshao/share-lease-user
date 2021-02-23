@@ -1,7 +1,7 @@
 <template>
   <div class="search-result-content">
     <!-- search bar -->
-    <v-container fluid align="center" justify="center">
+    <v-container fluid justify="center">
       <v-row class="fill-height ma-0 mx-auto search-part" align="center" justify="center">
         <!-- 搜索框 -->
         <v-col>
