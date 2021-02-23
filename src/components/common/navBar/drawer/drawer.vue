@@ -2,9 +2,10 @@
   <v-navigation-drawer app :value="drawerOpen" fixed temporary @input="close">
     <v-list nav dense>
       <v-list-item>
-        <v-text-field label="搜索框">
+        <searchBar></searchBar>
+        <!-- <v-text-field label="搜索框">
           <v-icon slot="append">mdi-magnify</v-icon>
-        </v-text-field>
+        </v-text-field> -->
       </v-list-item>
       <userAccount v-if="!$store.getters.isLogin"></userAccount>
       <v-list-item-group :value="path" active-class="deep-purple--text text--accent-4">
@@ -28,6 +29,7 @@
 <script lang="ts">
 import Vue, { PropType } from 'vue';
 import userAccount from '@/components/common/navBar/drawer/userAccount/userAccount.vue';
+import searchBar from '@/components/search/searchBar.vue';
 
 interface DrawerMethod {
   /**
@@ -40,6 +42,7 @@ export default Vue.extend<{}, DrawerMethod, {}, {}>({
   name: 'drawer',
   components: {
     userAccount,
+    searchBar,
   },
   props: {
     drawerOpen: Boolean as PropType<boolean>,

@@ -20,6 +20,16 @@ const routes: Array<RouteConfig> = [
     name: 'User',
     component: () => import('../../views/UserInfo.vue'),
   },
+  {
+    path: '/search/*/',
+    name: 'Search',
+    component: () => import('../../views/SearchResult.vue'),
+  },
+  {
+    path: '*',
+    name: '404',
+    component: Home,
+  },
 ];
 
 const router = new VueRouter({
