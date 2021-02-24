@@ -40,9 +40,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Login from '@/components/common/navbar/drawer/userAccount/login.vue';
-import Register from '@/components/common/navbar/drawer/userAccount/register.vue';
-import Forget from '@/components/common/navbar/drawer/userAccount/forget.vue';
+import Login from '@/components/common/navBar/drawer/userAccount/login.vue';
+import Register from '@/components/common/navBar/drawer/userAccount/register.vue';
+import Forget from '@/components/common/navBar/drawer/userAccount/forget.vue';
 
 interface UserAccountState {
   /**

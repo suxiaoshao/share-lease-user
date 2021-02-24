@@ -1,6 +1,6 @@
 <template>
   <div class="searchBar">
-    <v-text-field label="搜索框" v-model.trim="searchContent" @keyup.enter.native="toSearchGoods">
+    <v-text-field label="搜索框" color="orange" v-model.trim="searchContent" @keyup.enter.native="toSearchGoods">
       <v-icon class="search-icon" slot="append" @click="toSearchGoods">mdi-magnify</v-icon>
     </v-text-field>
   </div>
@@ -11,8 +11,6 @@ import Vue from 'vue';
 
 interface SearchBarState {
   searchContent: string; // 搜索框输入的内容
-  pageSize: number; //  一页多少个商品
-  pageNum: number; // 第几页
 }
 
 interface SearchBarMethod {
