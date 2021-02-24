@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../../views/Home.vue';
+import store from '../store/index';
 
 Vue.use(VueRouter);
 
@@ -36,6 +37,20 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
+});
+
+/**
+ * 添加路由守卫
+ * */
+router.beforeEach((to, from, next) => {
+  /**
+   * 未登陆时不显示
+   * */
+  if (to.name === 'User' && store.state.userInfo === null) {
+    next({ name: 'Home' });
+  } else {
+    next();
+  }
 });
 
 export default router;

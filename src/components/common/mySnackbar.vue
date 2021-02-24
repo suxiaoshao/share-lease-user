@@ -1,6 +1,6 @@
 <template>
   <v-snackbar :value="message.open">
-    {{ message }}
+    {{ message.message }}
     <template v-slot:action="{ attrs }">
       <v-btn text v-bind="attrs" @click="$emit('change', { message: '', open: false })">关闭</v-btn>
     </template>

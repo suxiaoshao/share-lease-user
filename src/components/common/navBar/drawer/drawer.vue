@@ -31,8 +31,8 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import userAccount from '@/components/common/navBar/drawer/userAccount/userAccount.vue';
 import searchBar from '@/components/search/searchBar.vue';
+import userAccount from '@/components/common/navbar/drawer/userAccount/userAccount.vue';
 
 interface DrawerMethod {
   /**

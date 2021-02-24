@@ -15,17 +15,14 @@ export interface HttpErrorData {
   message: string;
 }
 
+/**
+ * 添加 token
+ * */
 axios.interceptors.request.use(
   (config) => {
-    // Do something before request is sent
-    if (config.url === '/upload') {
-      config.headers['Content-Type'] = 'multipart/form-data';
-    }
-
     if (store.getters.isLogin) {
-      config.headers.Authorization = store.state.userInfo.accessToken;
+      config.headers.Authorization = store.state.userInfo?.accessToken;
     }
-    console.log(config.headers);
     return config;
   },
   (error) => {
