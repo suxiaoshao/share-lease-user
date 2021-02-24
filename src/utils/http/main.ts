@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import store from '@/utils/store/index';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://software.remotehost.icu';
@@ -13,6 +14,25 @@ export interface HttpErrorData {
   status: 1001;
   message: string;
 }
+
+axios.interceptors.request.use(
+  (config) => {
+    // Do something before request is sent
+    if (config.url === '/upload') {
+      config.headers['Content-Type'] = 'multipart/form-data';
+    }
+
+    if (store.getters.isLogin) {
+      config.headers.Authorization = store.state.userInfo.accessToken;
+    }
+    console.log(config.headers);
+    return config;
+  },
+  (error) => {
+    // Do something with request error
+    return Promise.reject(error);
+  },
+);
 
 export type HttpData<T> = HttpSuccessData<T> | HttpErrorData;
 

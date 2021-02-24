@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import navbar from '@/components/common/navbar/navbar.vue';
+import navbar from '@/components/common/navBar/navbar.vue';
 
 export default Vue.extend({
   name: 'main-page',

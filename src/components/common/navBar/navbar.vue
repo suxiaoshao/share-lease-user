@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Drawer from '@/components/common/navbar/drawer/drawer.vue';
+import Drawer from '@/components/common/navBar/drawer/drawer.vue';
 
 interface NavBarState {
   /**
