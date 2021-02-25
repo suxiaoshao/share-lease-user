@@ -76,6 +76,11 @@ interface UserEditMethod {
    * 保存修改
    * */
   saveChange(): void;
+
+  /**
+   * 提示
+   */
+  openMessage(message: string): void;
 }
 
 export default Vue.extend<UserEditState, UserEditMethod, {}, {}>({
@@ -93,14 +98,14 @@ export default Vue.extend<UserEditState, UserEditMethod, {}, {}>({
   },
   methods: {
     clickInput(): void {
-      document.getElementById('input').click();
+      document.getElementById('input')?.click();
     },
     fileUpload(files: File[]): void {
       const formData = new FormData();
       formData.append('file', files);
       upload(formData)
         .then((value) => {
-          this.newAvatar = value;
+          this.newAvatar = `http://software.remotehost.icu/file/${value}`;
         })
         .catch((res) => {
           console.log(res);
