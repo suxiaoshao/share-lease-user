@@ -1,13 +1,37 @@
 import { httpGet } from '@/utils/http/main';
 
 export interface GoodProp {
+  /**
+   * 商品 id
+   * */
   gid: number;
+  /**
+   * 名字
+   * */
   name: string;
+  /**
+   * 类别
+   * */
   type: string;
+  /**
+   * 租金
+   * */
   rent: number;
+  /**
+   * 购买价格
+   * */
   price: number;
+  /**
+   * 图片
+   * */
   picUrl: string;
+  /**
+   * 描述
+   * */
   info: string;
+  /**
+   * 商店 id
+   * */
   mig: number;
 }
 

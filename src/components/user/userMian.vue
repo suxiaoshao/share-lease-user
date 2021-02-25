@@ -16,6 +16,7 @@
       </div>
 
       <user-info-view></user-info-view>
+      <reset-password></reset-password>
     </v-card-text>
   </v-card>
 </template>
@@ -25,6 +26,7 @@ import Vue from 'vue';
 import { UserInfo } from '@/utils/http/getInfo';
 import UserInfoView from '@/components/user/userInfoView.vue';
 import UserEdit from '@/components/user/userEdit.vue';
+import ResetPassword from '@/components/user/resetPassword.vue';
 
 interface UserProfileContentCompute {
   /**
@@ -40,7 +42,7 @@ interface UserProfileContentCompute {
 export default Vue.extend<{}, {}, UserProfileContentCompute, {}>({
   name: 'user-main',
 
-  components: { UserEdit, UserInfoView },
+  components: { ResetPassword, UserEdit, UserInfoView },
   computed: {
     userName(): string {
       return (this.$store.state.userInfo as UserInfo).username;
@@ -62,6 +64,9 @@ export default Vue.extend<{}, {}, UserProfileContentCompute, {}>({
   overflow: auto;
   .card-main {
     padding: 20px 15% 0 15%;
+    @media screen and (max-width: 960px) {
+      padding: 0;
+    }
   }
 }
 </style>

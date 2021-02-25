@@ -70,7 +70,7 @@ interface UserEditMethod {
   /**
    * 文件上传
    * */
-  fileUpload(files: File[]): void;
+  fileUpload(files: File): void;
 
   /**
    * 保存修改
@@ -100,7 +100,7 @@ export default Vue.extend<UserEditState, UserEditMethod, {}, {}>({
     clickInput(): void {
       document.getElementById('input')?.click();
     },
-    fileUpload(files: File[]): void {
+    fileUpload(files: File): void {
       const formData = new FormData();
       formData.append('file', files);
       upload(formData)
