@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import store from '@/utils/store/index';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://software.remotehost.icu';
@@ -14,6 +15,22 @@ export interface HttpErrorData {
   message: string;
 }
 
+/**
+ * 添加 token
+ * */
+axios.interceptors.request.use(
+  (config) => {
+    if (store.getters.isLogin) {
+      config.headers.Authorization = store.state.userInfo?.accessToken;
+    }
+    return config;
+  },
+  (error) => {
+    // Do something with request error
+    return Promise.reject(error);
+  },
+);
+
 export type HttpData<T> = HttpSuccessData<T> | HttpErrorData;
 
 export async function httpBase<Req, Res>(method: 'get' | 'post' | 'put', url: string, data: Req): Promise<Res> {
@@ -24,25 +41,37 @@ export async function httpBase<Req, Res>(method: 'get' | 'post' | 'put', url: st
         .get<HttpData<Res>>(url, {
           params: data,
         })
-        .catch(() => {
-          throw '网络错误';
+        .catch((err: AxiosError<HttpData<Res>>) => {
+          console.log(err);
+          if (err.response) {
+            throw new Error(err.response.data.message);
+          }
+          throw new Error('网络错误');
         });
       break;
     case 'post':
-      resData = await axios.post<HttpData<Res>>(url, data).catch(() => {
-        throw '网络错误';
+      resData = await axios.post<HttpData<Res>>(url, data).catch((err: AxiosError<HttpData<Res>>) => {
+        console.log(err);
+        if (err.response) {
+          throw new Error(err.response.data.message);
+        }
+        throw new Error('网络错误');
       });
       break;
     case 'put':
-      resData = await axios.put<HttpData<Res>>(url, data).catch(() => {
-        throw '网络错误';
+      resData = await axios.put<HttpData<Res>>(url, data).catch((err: AxiosError<HttpData<Res>>) => {
+        console.log(err);
+        if (err.response) {
+          throw new Error(err.response.data.message);
+        }
+        throw new Error('网络错误');
       });
       break;
   }
   if (resData.data.status === 0) {
     return resData.data.data;
   }
-  throw resData.data.message;
+  throw new Error(resData.data.message);
 }
 
 export async function httpGet<Req, Res>(url: string, data: Req): Promise<Res> {

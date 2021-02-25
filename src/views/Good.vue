@@ -1,12 +1,12 @@
 <template>
   <main-page>
-    <home-main class="normal-setting"></home-main>
+    <goodMain></goodMain>
   </main-page>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import homeMain from '../components/home/homeMain.vue';
+import goodMain from '../components/good/goodMain.vue';
 import MainPage from '@/components/common/mainPage.vue';
 
 interface HomeState {
@@ -14,11 +14,11 @@ interface HomeState {
 }
 
 export default Vue.extend<HomeState, {}, {}, {}>({
-  name: 'Home',
+  name: 'Good',
 
   components: {
     MainPage,
-    homeMain,
+    goodMain,
   },
 });
 </script>

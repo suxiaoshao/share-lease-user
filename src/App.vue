@@ -9,3 +9,12 @@ export default Vue.extend({
   name: 'App',
 });
 </script>
+<style lang="scss">
+html,
+body,
+#app {
+  overflow: hidden !important;
+  height: 100%;
+  width: 100%;
+}
+</style>

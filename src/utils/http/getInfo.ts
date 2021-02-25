@@ -5,9 +5,9 @@ export interface UserInfo {
   email: string;
   username: string;
   password: string;
-  phone: string;
+  phone: string | null;
   level: number;
-  avatar: string;
+  avatar: string | null;
   accessToken: string;
 }
 

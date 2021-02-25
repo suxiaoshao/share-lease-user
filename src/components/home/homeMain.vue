@@ -1,8 +1,11 @@
 <template>
   <div class="main-page">
     <v-container fluid>
-      <!-- 轮播图 -->
+      <div class="search-bar-top">
+        <searchBar></searchBar>
+      </div>
       <div class="carousel-wrapper">
+        <!-- 轮播图 -->
         <v-carousel cycle height="400" hide-delimiter-background show-arrows-on-hover>
           <v-carousel-item v-for="(slide, i) in slides" :key="i">
             <v-sheet :color="colors[i]" height="100%">
@@ -14,6 +17,7 @@
         </v-carousel>
       </div>
       <div class="four-imgs">
+        <!-- 轮播图下方四个图片 -->
         <v-main class="white lighten-2">
           <v-container>
             <v-row>
@@ -61,7 +65,7 @@
         <div class="bottom-right-viwer">
           <v-carousel>
             <v-carousel-item
-              v-for="(item, i) in items"
+              v-for="(item, i) in fourImgItems"
               :key="i"
               :src="item.src"
               reverse-transition="fade-transition"
@@ -70,27 +74,31 @@
           </v-carousel>
         </div>
       </div>
+      <div class="content-bottom-divider">
+        <strong>more @share-lease-user</strong>
+        <v-divider></v-divider>
+      </div>
     </v-container>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import searchBar from '@/components/search/searchBar.vue';
 
 interface MainPageContentState {
-  colors: string[];
-  slides: string[];
-  alignments: string[];
-  items: { src: string }[];
+  colors: string[]; // 轮播图颜色
+  slides: string[]; // 轮播图内容
+  fourImgItems: { src: string }[]; // 四张图片
 }
 
 export default Vue.extend<MainPageContentState, {}, {}, {}>({
-  name: 'mainPageContent',
+  name: 'home-main',
+  components: { searchBar },
   data: () => ({
     colors: ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4'],
     slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
-    alignments: ['start', 'center', 'end'],
-    items: [
+    fourImgItems: [
       {
         src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
       },
@@ -114,11 +122,10 @@ export default Vue.extend<MainPageContentState, {}, {}, {}>({
 
 <style>
 .main-page {
-  margin: 1vh auto 0;
 }
 
 .carousel-wrapper {
-  margin-top: 2vh;
+  margin-top: 7vh;
 }
 
 .content-bottom-divider {
@@ -138,5 +145,18 @@ export default Vue.extend<MainPageContentState, {}, {}, {}>({
 .content-bottom .bottom-right-viwer {
   width: 48%;
   padding: 0 1rem 1rem;
+}
+
+@media screen and (max-width: 1260px) {
+  .content-bottom {
+    display: block;
+  }
+  .content-bottom .bottom-left-imgs {
+    width: 100%;
+  }
+  .content-bottom .bottom-right-viwer {
+    width: 100%;
+    margin-top: 1rem;
+  }
 }
 </style>
