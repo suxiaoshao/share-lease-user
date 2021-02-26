@@ -11,7 +11,7 @@ export interface HttpSuccessData<T> {
 }
 
 export interface HttpErrorData {
-  status: 1001;
+  status: 1001 | 1002;
   message: string;
 }
 
@@ -20,6 +20,9 @@ export interface HttpErrorData {
  * */
 axios.interceptors.request.use(
   (config) => {
+    /**
+     * 如果登录过就加上 token
+     * */
     if (store.getters.isLogin) {
       config.headers.Authorization = store.state.userInfo?.accessToken;
     }
@@ -34,42 +37,31 @@ axios.interceptors.request.use(
 export type HttpData<T> = HttpSuccessData<T> | HttpErrorData;
 
 export async function httpBase<Req, Res>(method: 'get' | 'post' | 'put', url: string, data: Req): Promise<Res> {
-  let resData: AxiosResponse<HttpData<Res>>;
-  switch (method) {
-    case 'get':
-      resData = await axios
-        .get<HttpData<Res>>(url, {
-          params: data,
-        })
-        .catch((err: AxiosError<HttpData<Res>>) => {
-          console.log(err);
-          if (err.response) {
-            throw new Error(err.response.data.message);
-          }
-          throw new Error('网络错误');
-        });
-      break;
-    case 'post':
-      resData = await axios.post<HttpData<Res>>(url, data).catch((err: AxiosError<HttpData<Res>>) => {
-        console.log(err);
-        if (err.response) {
-          throw new Error(err.response.data.message);
-        }
-        throw new Error('网络错误');
-      });
-      break;
-    case 'put':
-      resData = await axios.put<HttpData<Res>>(url, data).catch((err: AxiosError<HttpData<Res>>) => {
-        console.log(err);
-        if (err.response) {
-          throw new Error(err.response.data.message);
-        }
-        throw new Error('网络错误');
-      });
-      break;
-  }
+  const resData: AxiosResponse<HttpData<Res>> = (await axios({
+    method,
+    data,
+    url,
+  }).catch((err: AxiosError<HttpData<Res>>) => {
+    console.log(err);
+    /**
+     * axios 获取到值,不是因为网络因素引起的
+     * */
+    if (err.response) {
+      /**
+       * 如果是 token 过期,删除用户信息
+       * */
+      if (resData.data.status === 1002) {
+        store.commit('login', null);
+      }
+      throw new Error(err.response.data.message);
+    }
+    throw new Error('网络错误');
+  })) as AxiosResponse<HttpData<Res>>;
   if (resData.data.status === 0) {
     return resData.data.data;
+  }
+  if (resData.data.status === 1002) {
+    store.commit('login', null);
   }
   throw new Error(resData.data.message);
 }
