@@ -2,6 +2,11 @@
   <v-navigation-drawer app :value="drawerOpen" fixed temporary @input="close">
     <v-list nav dense>
       <v-list-item>
+        <div>
+          <img class="logo" src="@/assets/logo.png" alt="" />
+        </div>
+      </v-list-item>
+      <v-list-item>
         <searchBar></searchBar>
       </v-list-item>
       <userAccount v-if="!$store.getters.isLogin"></userAccount>
@@ -86,4 +91,9 @@ export default Vue.extend<{}, DrawerMethod, DrawerCompute, {}>({
 });
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.logo {
+  margin-left: -55px;
+  height: 70px;
+}
+</style>
