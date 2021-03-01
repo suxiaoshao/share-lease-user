@@ -28,7 +28,7 @@
           </v-row>
         </v-card-text>
 
-        <v-card-actions> </v-card-actions>
+        <v-card-actions></v-card-actions>
       </v-card>
       <!-- 如果以后有其他接口再写在这下面 -->
     </v-container>
@@ -55,7 +55,7 @@ interface GoodMainState {
   /**
    * 商品信息
    */
-  goodInfo: GoodProp;
+  goodInfo: GoodProp | null;
 }
 
 export default Vue.extend<GoodMainState, GoodMainMethod, {}, {}>({
@@ -76,16 +76,7 @@ export default Vue.extend<GoodMainState, GoodMainMethod, {}, {}>({
 
   data: () => ({
     goodID: '1',
-    goodInfo: {
-      gid: 1,
-      name: 'not found',
-      type: 'not found',
-      rent: 1,
-      price: 1,
-      picUrl: 'https://cdn.vuetifyjs.com/images/cards/docks.jpg',
-      info: 'not found',
-      mig: 1,
-    },
+    goodInfo: null,
   }),
 
   methods: {

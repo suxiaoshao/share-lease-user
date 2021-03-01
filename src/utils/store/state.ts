@@ -13,15 +13,10 @@ export interface State {
    * 搜索框内容
    * */
   searchContent: string;
-  /**
-   * 搜索框内容
-   * */
-  searchWhat: string;
 }
 
 export const state: State = {
   userInfo: null,
   isLogin: false,
   searchContent: '',
-  searchWhat: '',
 };
