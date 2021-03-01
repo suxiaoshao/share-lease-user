@@ -4,7 +4,7 @@
     <v-app-bar app dark height="64">
       <v-app-bar-nav-icon @click="drawerOpen = true"></v-app-bar-nav-icon>
 
-      <v-toolbar-title>在线租赁</v-toolbar-title>
+      <v-toolbar-title style="cursor: pointer" @click="toMainPage">在线租赁</v-toolbar-title>
     </v-app-bar>
 
     <drawer v-model="drawerOpen"></drawer>
@@ -22,7 +22,15 @@ interface NavBarState {
   drawerOpen: boolean;
 }
 
-export default Vue.extend<NavBarState, {}, {}, {}>({
+interface NavBarMethod {
+  /**
+   * 回到主页
+   */
+  toMainPage(): void;
+}
+
+export default Vue.extend<NavBarState, NavBarMethod, {}, {}>({
+  name: 'navbar',
   data(): NavBarState {
     return {
       drawerOpen: false,
@@ -34,7 +42,13 @@ export default Vue.extend<NavBarState, {}, {}, {}>({
   components: {
     Drawer,
   },
-  name: 'navbar',
+  methods: {
+    toMainPage(): void {
+      this.$router.push({
+        name: 'Home',
+      });
+    },
+  },
 });
 </script>
 
