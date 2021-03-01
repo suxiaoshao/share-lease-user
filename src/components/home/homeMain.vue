@@ -6,15 +6,7 @@
       </div>
       <div class="carousel-wrapper">
         <!-- 轮播图 -->
-        <v-carousel cycle height="400" hide-delimiter-background show-arrows-on-hover>
-          <v-carousel-item v-for="(slide, i) in slides" :key="i">
-            <v-sheet :color="colors[i]" height="100%">
-              <v-row class="fill-height" align="center" justify="center">
-                <div class="display-3">{{ slide }} Slide</div>
-              </v-row>
-            </v-sheet>
-          </v-carousel-item>
-        </v-carousel>
+        <homeHeader></homeHeader>
       </div>
       <div class="four-imgs">
         <!-- 轮播图下方四个图片 -->
@@ -85,6 +77,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import searchBar from '@/components/search/searchBar.vue';
+import homeHeader from '@/components/home/homeHeader.vue';
 
 interface MainPageContentState {
   colors: string[]; // 轮播图颜色
@@ -94,7 +87,7 @@ interface MainPageContentState {
 
 export default Vue.extend<MainPageContentState, {}, {}, {}>({
   name: 'home-main',
-  components: { searchBar },
+  components: { searchBar, homeHeader },
   data: () => ({
     colors: ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4'],
     slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
@@ -115,8 +108,6 @@ export default Vue.extend<MainPageContentState, {}, {}, {}>({
   }),
 
   watch: {},
-
-  methods: {},
 });
 </script>
 
