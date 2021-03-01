@@ -68,8 +68,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { search } from '@/utils/http/search';
-import { GoodProp } from '@/utils/http/goodList';
+import { search } from '@/utils/http/good/search';
+import { GoodProp } from '@/utils/http/good/goodList';
 import searchBar from '@/components/search/searchBar.vue';
 import goodsItem from '@/components/common/goodsItem.vue';
 import MySnackbar, { Message } from '@/components/common/mySnackbar.vue';
@@ -119,7 +119,7 @@ interface SearchResultContentMethod {
 }
 
 export default Vue.extend<SearchResultContentState, SearchResultContentMethod, {}, {}>({
-  name: 'searchResultContent',
+  name: 'search-result-content',
 
   data: () => ({
     goodList: [],

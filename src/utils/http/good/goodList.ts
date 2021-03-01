@@ -32,14 +32,21 @@ export interface GoodProp {
   /**
    * 商店 id
    * */
-  mig: number;
+  mid: number;
 }
 
+/**
+ * @description 获取商品列表
+ * @param pageSize 每页大小
+ * @param pageNum 页码,从 0 开始
+ * @param orderRule 正序反序
+ * @param orderBy 排序规则
+ * */
 export async function getGoodList(
   pageSize: number,
   pageNum: number,
   orderRule: 'ASC' | 'DESC',
-  orderBy: 'price',
+  orderBy: 'price' | 'gid' | 'rent',
 ): Promise<GoodProp[]> {
   return await httpGet<undefined, GoodProp[]>(
     `/good?pageSize=${pageSize}&pageNum=${pageNum}&orderRule=${orderRule}&orderBY=${orderBy}`,

@@ -33,7 +33,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { modifyPassword } from '@/utils/http/modifyPassword';
+import { modifyPassword } from '@/utils/http/user/modifyPassword';
 import MySnackbar, { Message } from '@/components/common/mySnackbar.vue';
 
 interface ResetPasswordState {

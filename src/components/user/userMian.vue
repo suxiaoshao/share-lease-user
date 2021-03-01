@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { UserInfo } from '@/utils/http/getInfo';
+import { UserInfo } from '@/utils/http/user/getInfo';
 import UserInfoView from '@/components/user/userInfoView.vue';
 import UserEdit from '@/components/user/userEdit.vue';
 import ResetPassword from '@/components/user/resetPassword.vue';

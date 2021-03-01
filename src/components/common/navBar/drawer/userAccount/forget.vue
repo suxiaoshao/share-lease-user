@@ -45,8 +45,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { resetPwdMail } from '@/utils/http/resetPwdMail';
-import { resetPassword } from '@/utils/http/resetPassword';
+import { resetPwdMail } from '@/utils/http/user/resetPwdMail';
+import { resetPassword } from '@/utils/http/user/resetPassword';
 import MySnackbar, { Message } from '@/components/common/mySnackbar.vue';
 
 interface ForgetState {

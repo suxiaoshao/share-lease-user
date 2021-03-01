@@ -37,8 +37,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { good } from '@/utils/http/good';
-import { GoodProp } from '@/utils/http/goodList';
+import { good } from '@/utils/http/good/good';
+import { GoodProp } from '@/utils/http/good/goodList';
 
 interface GoodMainMethod {
   /**

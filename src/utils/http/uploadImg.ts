@@ -1,5 +1,10 @@
 import { httpPost } from '@/utils/http/main';
 
-export async function upload(formData: FormData): Promise<string> {
+/**
+ * @description 上传文件
+ * */
+export async function upload(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append('file', file);
   return await httpPost<FormData, string>('/upload', formData);
 }

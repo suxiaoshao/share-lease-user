@@ -29,7 +29,7 @@
 
 <script lang="ts">
 import Vue, { PropType } from 'vue';
-import { GoodProp } from '@/utils/http/goodList';
+import { GoodProp } from '@/utils/http/good/goodList';
 
 interface GoodItemMethod {
   /**

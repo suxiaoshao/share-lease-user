@@ -33,10 +33,10 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { UserInfo } from '@/utils/http/getInfo';
+import { UserInfo } from '@/utils/http/user/getInfo';
 import { upload } from '@/utils/http/uploadImg';
 import MySnackbar, { Message } from '@/components/common/mySnackbar.vue';
-import { update } from '@/utils/http/update';
+import { update } from '@/utils/http/user/update';
 
 interface UserEditState {
   /**
@@ -100,10 +100,8 @@ export default Vue.extend<UserEditState, UserEditMethod, {}, {}>({
     clickInput(): void {
       document.getElementById('input')?.click();
     },
-    fileUpload(files: File): void {
-      const formData = new FormData();
-      formData.append('file', files);
-      upload(formData)
+    fileUpload(file: File): void {
+      upload(file)
         .then((value) => {
           this.newAvatar = `http://software.remotehost.icu/file/${value}`;
         })

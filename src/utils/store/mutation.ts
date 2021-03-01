@@ -1,6 +1,6 @@
 import { State } from './state';
 import { MutationTree } from 'vuex';
-import { UserInfo } from '@/utils/http/getInfo';
+import { UserInfo } from '@/utils/http/user/getInfo';
 
 const mutations: MutationTree<State> = {
   login(state: State, userInfo: UserInfo) {

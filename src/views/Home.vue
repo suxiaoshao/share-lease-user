@@ -25,11 +25,12 @@ export default Vue.extend<HomeState, {}, {}, {}>({
 
 <style lang="scss" scoped>
 .normal-setting {
-  padding: 0 15% 0 15%;
   width: 100%;
-  @media screen and (max-width: 1260px) {
-    width: 100%;
-    padding: 0;
+  @media screen and (min-width: 960px) {
+    padding: 0 15% 0 15%;
+  }
+  @media screen and (min-width: 1260px) {
+    padding: 0 20% 0 20%;
   }
   overflow: auto;
   height: 100%;

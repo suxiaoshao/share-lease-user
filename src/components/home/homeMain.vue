@@ -54,17 +54,6 @@
             </v-col>
           </v-row>
         </div>
-        <div class="bottom-right-viwer">
-          <v-carousel>
-            <v-carousel-item
-              v-for="(item, i) in fourImgItems"
-              :key="i"
-              :src="item.src"
-              reverse-transition="fade-transition"
-              transition="fade-transition"
-            ></v-carousel-item>
-          </v-carousel>
-        </div>
       </div>
       <div class="content-bottom-divider">
         <strong>more @share-lease-user</strong>
@@ -79,33 +68,9 @@ import Vue from 'vue';
 import searchBar from '@/components/search/searchBar.vue';
 import homeHeader from '@/components/home/homeHeader.vue';
 
-interface MainPageContentState {
-  colors: string[]; // 轮播图颜色
-  slides: string[]; // 轮播图内容
-  fourImgItems: { src: string }[]; // 四张图片
-}
-
-export default Vue.extend<MainPageContentState, {}, {}, {}>({
+export default Vue.extend<{}, {}, {}, {}>({
   name: 'home-main',
   components: { searchBar, homeHeader },
-  data: () => ({
-    colors: ['indigo', 'warning', 'pink darken-2', 'red lighten-1', 'deep-purple accent-4'],
-    slides: ['First', 'Second', 'Third', 'Fourth', 'Fifth'],
-    fourImgItems: [
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-      },
-      {
-        src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-      },
-    ],
-  }),
 
   watch: {},
 });
@@ -133,21 +98,13 @@ export default Vue.extend<MainPageContentState, {}, {}, {}>({
   width: 48%;
 }
 
-.content-bottom .bottom-right-viwer {
-  width: 48%;
-  padding: 0 1rem 1rem;
-}
-
 @media screen and (max-width: 1260px) {
   .content-bottom {
     display: block;
   }
+
   .content-bottom .bottom-left-imgs {
     width: 100%;
-  }
-  .content-bottom .bottom-right-viwer {
-    width: 100%;
-    margin-top: 1rem;
   }
 }
 </style>

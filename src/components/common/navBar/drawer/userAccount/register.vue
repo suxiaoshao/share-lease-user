@@ -51,8 +51,8 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { sendMailCode } from '@/utils/http/sendMailCode';
-import { register } from '@/utils/http/register';
+import { sendMailCode } from '@/utils/http/user/sendMailCode';
+import { register } from '@/utils/http/user/register';
 import MySnackbar, { Message } from '@/components/common/mySnackbar.vue';
 
 interface RegisterState {

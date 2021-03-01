@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { UserInfo } from '@/utils/http/getInfo';
+import { UserInfo } from '@/utils/http/user/getInfo';
 
 interface UserInfoViewCompute {
   userInfo: UserInfo;

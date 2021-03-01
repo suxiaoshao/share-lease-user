@@ -1,4 +1,4 @@
-import { UserInfo } from '@/utils/http/getInfo';
+import { UserInfo } from '@/utils/http/user/getInfo';
 
 export interface State {
   /**

@@ -31,7 +31,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { login } from '@/utils/http/login';
+import { login } from '@/utils/http/user/login';
 import MySnackbar, { Message } from '@/components/common/mySnackbar.vue';
 
 interface LoginState {
