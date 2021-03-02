@@ -9,6 +9,9 @@
       <v-list-item>
         <searchBar></searchBar>
       </v-list-item>
+    </v-list>
+    <v-divider></v-divider>
+    <v-list nav dense>
       <userAccount v-if="!$store.getters.isLogin"></userAccount>
       <v-list-item-group :value="name" active-class="deep-purple--text text--accent-4">
         <v-list-item value="Home" @click="pushRouter('Home')">
@@ -31,6 +34,15 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
+    <v-divider></v-divider>
+    <v-list nav dense>
+      <v-list-item v-if="$store.getters.isLogin" @click="unLogin">
+        <v-list-item-icon>
+          <v-icon>mdi-lock-off</v-icon>
+        </v-list-item-icon>
+        退出登陆
+      </v-list-item>
+    </v-list>
   </v-navigation-drawer>
 </template>
 
@@ -49,6 +61,11 @@ interface DrawerMethod {
    * 跳转至指定页面
    * */
   pushRouter(name: string): void;
+
+  /**
+   * 退出登陆
+   * */
+  unLogin(): void;
 }
 
 interface DrawerCompute {
@@ -81,6 +98,9 @@ export default Vue.extend<{}, DrawerMethod, DrawerCompute, {}>({
           name: name,
         });
       }
+    },
+    unLogin() {
+      this.$store.commit('login', null);
     },
   },
   computed: {

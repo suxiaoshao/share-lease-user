@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import store from '@/utils/store/index';
+import { UserInfo } from '@/utils/http/user/getInfo';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = 'http://software.remotehost.icu';
@@ -23,9 +24,9 @@ axios.interceptors.request.use(
     /**
      * 如果登录过就加上 token
      * */
-    if (store.getters.isLogin) {
-      config.headers.Authorization = store.state.userInfo?.accessToken;
-    }
+    config.headers.Authorization = (JSON.parse(
+      window.localStorage.getItem('userInfo') ?? '{}',
+    ) as UserInfo | null)?.accessToken;
     return config;
   },
   (error) => {

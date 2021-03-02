@@ -40,5 +40,5 @@ export interface UserInfo {
  * @param uid 用户 id
  * */
 export async function getInfo(uid: number): Promise<UserInfo> {
-  return await httpGet<undefined, UserInfo>(`/user/getInfo?uid=${uid}`, undefined);
+  return await httpGet<undefined, UserInfo>(`/user/getInfo/${uid}`, undefined);
 }
