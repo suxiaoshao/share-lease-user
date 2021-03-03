@@ -17,7 +17,7 @@
               <div>类型： {{ goodInfo.type }}</div>
 
               <div>
-                租金：<strong>￥{{ goodInfo.rent }}</strong>
+                租金：<strong>￥{{ goodInfo.createRentOrder }}</strong>
               </div>
             </v-col>
             <v-col cols="1">
