@@ -51,7 +51,7 @@ export async function httpBase<Req, Res>(method: 'get' | 'post' | 'put', url: st
       /**
        * 如果是 token 过期,删除用户信息
        * */
-      if (resData.data.status === 1002) {
+      if (err.response.data.status === 1002) {
         store.commit('login', null);
       }
       throw new Error(err.response.data.message);
