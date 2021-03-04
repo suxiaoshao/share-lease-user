@@ -52,10 +52,16 @@ export default Vue.extend<{}, GoodItemMethod, {}, GoodItemProp>({
   props: {
     goodInfo: Object as PropType<GoodProp>,
   },
-
+  mounted() {
+    console.log(this.goodInfo);
+  },
   methods: {
     addToCart() {
-      console.log('add to cart');
+      console.log('addd');
+      this.$store.commit('updateCartGoods', {
+        good: this.goodInfo,
+        method: 1,
+      });
     },
     toGoodDetail() {
       console.log('good detail');

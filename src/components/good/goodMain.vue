@@ -22,7 +22,7 @@
             </v-col>
             <v-col cols="1">
               <v-btn color="orange" class="white--text" fab right top>
-                <v-icon>mdi-cart</v-icon>
+                <v-icon @click="addToCart">mdi-cart</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -45,6 +45,10 @@ interface GoodMainMethod {
    * 解析url参数
    */
   parseGoodArgs(): void;
+  /**
+   * 添加物品到购物车
+   */
+  addToCart(): void;
 }
 
 interface GoodMainState {
@@ -90,6 +94,13 @@ export default Vue.extend<GoodMainState, GoodMainMethod, {}, {}>({
           this.goodID = urls[i + 1];
         }
       }
+    },
+    addToCart() {
+      console.log('addd');
+      this.$store.commit('updateCartGoods', {
+        good: this.goodInfo,
+        method: 1,
+      });
     },
   },
 });

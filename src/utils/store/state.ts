@@ -1,4 +1,10 @@
 import { UserInfo } from '@/utils/http/user/getInfo';
+import { GoodProp } from '@/utils/http/good/goodList';
+
+export interface CartProp extends GoodProp {
+  num: number;
+  orderType: 'buy' | 'rent';
+}
 
 export interface State {
   /**
@@ -13,10 +19,16 @@ export interface State {
    * 搜索框内容
    * */
   searchContent: string;
+  /**
+   * 购物车商品
+   * 暂存于localStorage
+   */
+  cartGoods: CartProp[];
 }
 
 export const state: State = {
   userInfo: null,
   isLogin: false,
   searchContent: '',
+  cartGoods: [],
 };
