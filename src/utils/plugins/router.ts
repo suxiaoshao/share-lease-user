@@ -27,6 +27,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('../../views/Good.vue'),
   },
   {
+    path: '/orders',
+    name: 'Orders',
+    component: () => import('../../views/Orders.vue'),
+  },
+  {
     path: '*',
     name: '404',
     component: Home,

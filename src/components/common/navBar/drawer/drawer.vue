@@ -16,21 +16,27 @@
       <v-list-item-group :value="name" active-class="deep-purple--text text--accent-4">
         <v-list-item value="Home" @click="pushRouter('Home')">
           <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
+            <v-icon color="orange darken-2">mdi-home</v-icon>
           </v-list-item-icon>
           首页
         </v-list-item>
         <v-list-item v-if="$store.getters.isLogin" value="User" @click="pushRouter('User')">
           <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
+            <v-icon color="blue darken-2">mdi-account</v-icon>
           </v-list-item-icon>
           账户信息
         </v-list-item>
         <v-list-item value="Search" @click="pushRouter('Search')">
           <v-list-item-icon>
-            <v-icon>mdi-magnify</v-icon>
+            <v-icon color="yellow darken-2">mdi-magnify</v-icon>
           </v-list-item-icon>
           搜索
+        </v-list-item>
+        <v-list-item value="Orders" @click="pushRouter('Orders')">
+          <v-list-item-icon>
+            <v-icon color="green darken-2">mdi-domain</v-icon>
+          </v-list-item-icon>
+          订单
         </v-list-item>
       </v-list-item-group>
     </v-list>
@@ -38,7 +44,7 @@
     <v-list nav dense>
       <v-list-item v-if="$store.getters.isLogin" @click="unLogin">
         <v-list-item-icon>
-          <v-icon>mdi-lock-off</v-icon>
+          <v-icon color="red darken-2">mdi-lock-off</v-icon>
         </v-list-item-icon>
         退出登陆
       </v-list-item>
