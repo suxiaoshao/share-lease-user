@@ -3,6 +3,7 @@ import { MutationTree } from 'vuex';
 import { UserInfo } from '@/utils/http/user/getInfo';
 import { CartProp } from '@/utils/store/state';
 import { GoodProp } from '@/utils/http/good/goodList';
+import router, { afterLoginPage } from '@/utils/plugins/router';
 
 const mutations: MutationTree<State> = {
   login(state: State, userInfo: UserInfo | null) {
@@ -10,6 +11,9 @@ const mutations: MutationTree<State> = {
       window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
     } else {
       window.localStorage.removeItem('userInfo');
+      if (afterLoginPage.includes(router.app.$route.name ?? '*')) {
+        router.push({ name: 'Home' }).then();
+      }
     }
     state.userInfo = userInfo;
   },
@@ -18,10 +22,8 @@ const mutations: MutationTree<State> = {
   },
   /**
    * 更新购物车内容
-   *
    * @param payload.method: 1(add) 2(del), 3(init), 4(change type)
    */
-
   updateCartGoods(state: State, payload: { good: GoodProp; method: number; orderType: 'buy' | 'rent' }) {
     if (payload.method === 1) {
       // 添加购物车
@@ -59,8 +61,7 @@ const mutations: MutationTree<State> = {
     } else if (payload.method === 3) {
       const items = localStorage.getItem(`${state.userInfo?.email}-cart`);
       if (items) {
-        const cartInfo = JSON.parse(items);
-        state.cartGoods = cartInfo;
+        state.cartGoods = JSON.parse(items);
       }
     } else if (payload.method === 4) {
       // change type

@@ -17,7 +17,7 @@
               <div>类型： {{ goodInfo.type }}</div>
 
               <div>
-                租金：<strong>￥{{ goodInfo.createRentOrder }}</strong>
+                租金：<strong>￥{{ goodInfo.rent }}</strong>
               </div>
             </v-col>
             <v-col cols="1">
@@ -45,6 +45,7 @@ interface GoodMainMethod {
    * 解析url参数
    */
   parseGoodArgs(): void;
+
   /**
    * 添加物品到购物车
    */
@@ -78,10 +79,12 @@ export default Vue.extend<GoodMainState, GoodMainMethod, {}, {}>({
       });
   },
 
-  data: () => ({
-    goodID: '1',
-    goodInfo: null,
-  }),
+  data(): GoodMainState {
+    return {
+      goodID: '1',
+      goodInfo: null,
+    };
+  },
 
   methods: {
     parseGoodArgs() {

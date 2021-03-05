@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import buyCatItem from '@/components/orders/buyCarItem.vue';
+import buyCatItem from '@/components/buyCar/buyCarItem.vue';
 import { CartProp } from '@/utils/store/state';
 
 interface BuyCarState {

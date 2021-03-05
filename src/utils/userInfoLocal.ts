@@ -15,5 +15,15 @@ export function initUserInfoByLocal(): void {
       .catch(() => {
         window.localStorage.removeItem('userInfo');
       });
+  } else {
+    store.commit('login', null);
   }
+}
+
+/**
+ * @description 从数据库中获取 userInfo 数据
+ * */
+export function getUserInfoByLocal(): UserInfo | null {
+  const userInfoStr = window.localStorage.getItem('userInfo');
+  return userInfoStr === null ? null : JSON.parse(userInfoStr);
 }

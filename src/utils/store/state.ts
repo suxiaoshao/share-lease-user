@@ -1,5 +1,6 @@
 import { UserInfo } from '@/utils/http/user/getInfo';
 import { GoodProp } from '@/utils/http/good/goodList';
+import { getUserInfoByLocal } from '@/utils/userInfoLocal';
 
 export interface CartProp extends GoodProp {
   num: number;
@@ -27,7 +28,7 @@ export interface State {
 }
 
 export const state: State = {
-  userInfo: null,
+  userInfo: getUserInfoByLocal(),
   isLogin: false,
   searchContent: '',
   cartGoods: [],

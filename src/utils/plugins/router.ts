@@ -32,6 +32,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('../../views/Orders.vue'),
   },
   {
+    path: '/buyCar',
+    name: 'BuyCar',
+    component: () => import('../../views/BuyCar.vue'),
+  },
+  {
     path: '*',
     name: '404',
     component: Home,
@@ -43,7 +48,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
-
+/**
+ * 未登录时不允许访问的页面
+ * */
+export const afterLoginPage = ['User', 'Orders', 'BuyCar'];
 /**
  * 添加路由守卫
  * */
@@ -51,7 +59,8 @@ router.beforeEach((to, from, next) => {
   /**
    * 未登陆时不显示
    * */
-  if (to.name === 'User' && store.state.userInfo === null) {
+  if (afterLoginPage.includes(to.name ?? '*') && !store.getters.isLogin) {
+    console.log(!store.getters.isLogin);
     next({ name: 'Home' });
   } else {
     next();

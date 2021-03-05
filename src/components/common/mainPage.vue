@@ -4,20 +4,17 @@
     <main>
       <slot></slot>
     </main>
-    <buyCar class="buy-car" v-if="$store.getters.isLogin"></buyCar>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
 import navbar from '@/components/common/navbar/navbar.vue';
-import buyCar from '@/components/orders/buyCar.vue';
 
 export default Vue.extend({
   name: 'main-page',
   components: {
     navbar,
-    buyCar,
   },
 });
 </script>

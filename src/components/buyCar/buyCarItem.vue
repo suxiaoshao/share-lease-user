@@ -22,8 +22,8 @@
           </v-card-actions>
           <v-card-actions>
             <v-radio-group v-model="itemProp.orderType" row>
-              <v-radio @change="changeOrderType(item.gid, 'buy')" label="购买" value="buy"></v-radio>
-              <v-radio @change="changeOrderType(item.gid, 'rent')" label="租赁" value="rent"></v-radio>
+              <v-radio @change="changeOrderType(itemProp.gid, 'buy')" label="购买" value="buy"></v-radio>
+              <v-radio @change="changeOrderType(itemProp.gid, 'rent')" label="租赁" value="rent"></v-radio>
             </v-radio-group>
           </v-card-actions>
         </div>
