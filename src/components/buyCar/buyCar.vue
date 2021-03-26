@@ -2,79 +2,28 @@
   <!-- 购物车 -->
   <div class="cart">
     <v-container>
-      <v-container style="overflow-y: scroll; padding: 1rem 1rem 4rem" class="text-center">
-        <!-- expend items -->
-        <h1 class="headline" style="text-align: left">购物车</h1>
-        <h1 class="subtitle-1 orange" style="color: white; text-align: left; padding: 0.4rem">购买：</h1>
-        <v-container>
-          <v-row dense style="margin-top: 1.5rem">
-            <v-col v-for="(item, i) in cartList" :key="i" cols="6" v-show="item.orderType === 'buy'">
-              <buy-cat-item :itemProp="item"></buy-cat-item>
-            </v-col>
-          </v-row>
-        </v-container>
-        <h1 class="subtitle-1 orange" style="color: white; text-align: left; padding: 0.4rem">租赁：</h1>
-        <v-container>
-          <v-row dense style="margin-top: 1.5rem">
-            <v-col v-for="(item, i) in cartList" :key="i" cols="6" v-show="item.orderType === 'rent'">
-              <buy-cat-item :itemProp="item"></buy-cat-item>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-container>
-      <v-container>
-        <!-- 金额记录 -->
-        <v-card color="#385F73" dark max-width="400px" class="check-cart">
-          <div class="d-flex">
-            <v-card-title>
-              购买金额合计：<span style="color: orange">{{ cartBuyMoney.toFixed(2) }}￥</span>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-btn color="orange" rounded large @click="checkAndCreateOrder('buy')">结算 </v-btn>
-            </v-card-actions>
-          </div>
-        </v-card>
-      </v-container>
-      <v-container>
-        <v-card color="#385F73" light max-width="400px" class="check-cart" style="left: 3rem">
-          <div class="d-flex">
-            <v-card-title>
-              租赁金额合计：<span style="color: orange">{{ cartRentMoney.toFixed(2) }}￥</span>
-            </v-card-title>
-
-            <v-card-actions>
-              <v-btn color="orange" rounded large @click="checkAndCreateOrder('rent')">结算 </v-btn>
-            </v-card-actions>
-          </div>
-        </v-card>
-      </v-container>
+      <v-tabs fixed-tabs background-color="indigo" dark>
+        <v-tab to="/buyCar/buy"> 购买 </v-tab>
+        <v-tab to="/buyCar/rent"> 租赁 </v-tab>
+      </v-tabs>
+      <v-container> </v-container>
+      <v-container> </v-container>
     </v-container>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import buyCatItem from '@/components/buyCar/buyCarItem.vue';
+import { createBugOrder } from '@/utils/http/order/createBugOrder';
+import { createRentOrder } from '@/utils/http/order/createRentOrder';
 import { CartProp } from '@/utils/store/state';
 
 interface BuyCarState {
   /**
-   * 打开购物车
-   */
-  sheet: boolean;
-  /**
    * 订单类型
    */
   buyOrRent: 'buy' | 'rent';
-  /**
-   * 购买订单
-   */
-  buyList: CartProp[];
-  /**
-   * 租赁订单
-   */
-  rentList: CartProp[];
 }
 
 interface BuyCarComputed {
@@ -101,9 +50,6 @@ interface BuyCarMehtod {
 
 export default Vue.extend<BuyCarState, BuyCarMehtod, BuyCarComputed, {}>({
   name: 'buyCar',
-  components: {
-    buyCatItem,
-  },
   computed: {
     cartList() {
       return this.$store.state.cartGoods;
@@ -120,8 +66,34 @@ export default Vue.extend<BuyCarState, BuyCarMehtod, BuyCarComputed, {}>({
       // 创建订单
       if (buyOrRent === 'rent') {
         // 租赁
+        // 还没写
+        for (let i = 0; i < this.cartList.length; i += 1) {
+          if (this.cartList[i].orderType === 'buy') {
+            const good = this.cartList[i];
+            createRentOrder(good.gid, good.rent, good.num, 'fandouhuayuan 30#001')
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
       } else {
         // 购买
+        // 扫描订单，过滤出购买订单
+        for (let i = 0; i < this.cartList.length; i += 1) {
+          if (this.cartList[i].orderType === 'buy') {
+            const good = this.cartList[i];
+            createBugOrder(good.gid, good.num, 'fandouhuayuan 30#001')
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
       }
     },
   },
@@ -137,10 +109,7 @@ export default Vue.extend<BuyCarState, BuyCarMehtod, BuyCarComputed, {}>({
     }
   },
   data: () => ({
-    sheet: false,
     buyOrRent: 'buy',
-    buyList: [],
-    rentList: [],
   }),
 });
 </script>

@@ -6,6 +6,10 @@ import { OrderDetail } from '@/utils/http/order/getOrderList';
  * @param gid 商品 id
  * @param address 地址
  * */
-export async function createBugOrder(gid: number, address: string): Promise<OrderDetail> {
-  return await httpPost<{ gid: number; address: string }, OrderDetail>('/order/createBugOrder', { gid, address });
+export async function createBugOrder(gid: number, num: number, address: string): Promise<OrderDetail> {
+  return await httpPost<{ gid: number; num: number; address: string }, OrderDetail>('/order/buy', {
+    gid,
+    num,
+    address,
+  });
 }
