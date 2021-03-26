@@ -76,6 +76,22 @@ const mutations: MutationTree<State> = {
     }
     console.log(state.cartGoods);
   },
+  /**
+   * 购物车金额累计
+   */
+  cartMoneyCheck(state: State): void {
+    let buyMoney = 0;
+    let rentMoney = 0;
+    for (let i = 0; i < state.cartGoods.length; i += 1) {
+      if (state.cartGoods[i].orderType === 'buy') {
+        buyMoney += state.cartGoods[i].num * state.cartGoods[i].price;
+      } else {
+        rentMoney += state.cartGoods[i].num * state.cartGoods[i].rent;
+      }
+    }
+    state.cartBuyMoney = buyMoney;
+    state.cartRentMoney = rentMoney;
+  },
 };
 
 export default mutations;

@@ -25,6 +25,14 @@ export interface State {
    * 暂存于localStorage
    */
   cartGoods: CartProp[];
+  /**
+   * 购物车总金额
+   */
+  cartRentMoney: number;
+  /**
+   * 购物车购买总金额
+   */
+  cartBuyMoney: number;
 }
 
 export const state: State = {
@@ -32,4 +40,6 @@ export const state: State = {
   isLogin: false,
   searchContent: '',
   cartGoods: [],
+  cartRentMoney: 0,
+  cartBuyMoney: 0,
 };

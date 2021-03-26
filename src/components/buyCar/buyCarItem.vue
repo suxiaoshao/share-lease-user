@@ -29,7 +29,7 @@
         </div>
 
         <v-avatar class="ma-3" size="125" tile>
-          <v-img :src="itemProp.picUrl"></v-img>
+          <v-img @click="toGoodInfo(itemProp.gid)" :src="itemProp.picUrl" style="cursor: pointer"></v-img>
         </v-avatar>
       </div>
     </v-card>
@@ -62,6 +62,11 @@ interface BuyCarItemMethod {
    * 修改类型
    */
   changeOrderType(gid: number, orderType: 'buy' | 'rent'): void;
+
+  /**
+   * 查看商品信息
+   */
+  toGoodInfo(gid: number): void;
 }
 
 interface BuyCarItemProp {
@@ -85,6 +90,7 @@ export default Vue.extend<BuyCarItemState, BuyCarItemMethod, {}, BuyCarItemProp>
         },
         method: 2,
       });
+      this.$store.commit('cartMoneyCheck');
     },
     plusGoodNum(gid: number): void {
       this.$store.commit('updateCartGoods', {
@@ -93,6 +99,7 @@ export default Vue.extend<BuyCarItemState, BuyCarItemMethod, {}, BuyCarItemProp>
         },
         method: 1,
       });
+      this.$store.commit('cartMoneyCheck');
     },
     changeOrderType(gid: number, orderType: 'buy' | 'rent'): void {
       this.$store.commit('updateCartGoods', {
@@ -101,6 +108,14 @@ export default Vue.extend<BuyCarItemState, BuyCarItemMethod, {}, BuyCarItemProp>
         },
         method: 4,
         orderType,
+      });
+      this.$store.commit('cartMoneyCheck');
+    },
+    toGoodInfo(gid: number) {
+      console.log(gid);
+      console.log('asdasdasdasdasd');
+      this.$router.push({
+        path: `/good/${gid}`,
       });
     },
   },
