@@ -17,6 +17,8 @@
 
       <user-info-view></user-info-view>
       <reset-password></reset-password>
+      <user-adress-view></user-adress-view>
+      <user-adress-edit></user-adress-edit>
     </v-card-text>
   </v-card>
 </template>
@@ -26,6 +28,8 @@ import Vue from 'vue';
 import { UserInfo } from '@/utils/http/user/getInfo';
 import UserInfoView from '@/components/user/userInfoView.vue';
 import UserEdit from '@/components/user/userEdit.vue';
+import UserAdressEdit from '@/components/user/userAdressAdd.vue';
+import UserAdressView from '@/components/user/userAdressView.vue';
 import ResetPassword from '@/components/user/resetPassword.vue';
 
 interface UserProfileContentCompute {
@@ -42,7 +46,7 @@ interface UserProfileContentCompute {
 export default Vue.extend<{}, {}, UserProfileContentCompute, {}>({
   name: 'user-main',
 
-  components: { ResetPassword, UserEdit, UserInfoView },
+  components: { ResetPassword, UserEdit, UserInfoView, UserAdressEdit, UserAdressView },
   computed: {
     userName(): string {
       return (this.$store.state.userInfo as UserInfo).username;

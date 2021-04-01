@@ -1,6 +1,7 @@
 import { UserInfo } from '@/utils/http/user/getInfo';
 import { GoodProp } from '@/utils/http/good/goodList';
 import { getUserInfoByLocal } from '@/utils/userInfoLocal';
+import { UserAdress } from '@/utils/http/user/addNewAddress';
 
 export interface CartProp extends GoodProp {
   num: number;
@@ -25,6 +26,18 @@ export interface State {
    * 暂存于localStorage
    */
   cartGoods: CartProp[];
+  /**
+   * 购物车总金额
+   */
+  cartRentMoney: number;
+  /**
+   * 购物车购买总金额
+   */
+  cartBuyMoney: number;
+  /**
+   * 用户地址列表
+   */
+  userAddressList: UserAdress[];
 }
 
 export const state: State = {
@@ -32,4 +45,7 @@ export const state: State = {
   isLogin: false,
   searchContent: '',
   cartGoods: [],
+  cartRentMoney: 0,
+  cartBuyMoney: 0,
+  userAddressList: [],
 };

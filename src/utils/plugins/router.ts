@@ -30,11 +30,35 @@ const routes: Array<RouteConfig> = [
     path: '/orders',
     name: 'Orders',
     component: () => import('../../views/Orders.vue'),
+    children: [
+      {
+        path: '/orders/buy',
+        name: 'OrderBuy',
+        component: () => import('../../components/orders/orderBuy.vue'),
+      },
+      {
+        path: '/orders/rent',
+        name: 'OrderRent',
+        component: () => import('../../components/orders/orderRent.vue'),
+      },
+    ],
   },
   {
     path: '/buyCar',
     name: 'BuyCar',
     component: () => import('../../views/BuyCar.vue'),
+    children: [
+      {
+        path: '/buyCar/buy',
+        name: 'BuyCarBuy',
+        component: () => import('../../components/buyCar/buyCarBuy.vue'),
+      },
+      {
+        path: '/buyCar/rent',
+        name: 'BuyCarRent',
+        component: () => import('../../components/buyCar/buyCarRent.vue'),
+      },
+    ],
   },
   {
     path: '*',

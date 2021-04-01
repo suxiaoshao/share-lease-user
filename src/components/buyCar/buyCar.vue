@@ -1,35 +1,25 @@
 <template>
   <!-- 购物车 -->
-  <div style="width: 200px" class="cart">
-    <v-btn color="blue" dark @click="sheet = !sheet" max-width="200">
-      <v-icon>mdi-cart</v-icon>
-    </v-btn>
-    <v-bottom-sheet v-model="sheet">
-      <v-sheet style="padding: 1rem 1rem 4rem" class="text-center bottom-sheet" height="500px">
-        <h3 style="position: absolute; left: 49%">购物车</h3>
-        <!-- expend items -->
-        <v-container>
-          <v-row dense style="overflow-y: scroll; height: 350px; margin-top: 1.5rem">
-            <v-col v-for="(item, i) in cartList" :key="i" cols="6">
-              <buy-cat-item :itemProp="item"></buy-cat-item>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-sheet>
-    </v-bottom-sheet>
+  <div class="cart">
+    <v-container>
+      <v-tabs fixed-tabs background-color="indigo" dark>
+        <v-tab to="/buyCar/buy"> 购买 </v-tab>
+        <v-tab to="/buyCar/rent"> 租赁 </v-tab>
+      </v-tabs>
+      <v-container> </v-container>
+      <v-container> </v-container>
+    </v-container>
+    <router-view></router-view>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import buyCatItem from '@/components/buyCar/buyCarItem.vue';
+import { createBugOrder } from '@/utils/http/order/createBugOrder';
+import { createRentOrder } from '@/utils/http/order/createRentOrder';
 import { CartProp } from '@/utils/store/state';
 
 interface BuyCarState {
-  /**
-   * 打开购物车
-   */
-  sheet: boolean;
   /**
    * 订单类型
    */
@@ -41,16 +31,70 @@ interface BuyCarComputed {
    * 购物车列表
    */
   cartList: CartProp[];
+  /**
+   * 购物车租赁金额
+   */
+  cartRentMoney: number;
+  /**
+   * 购物车购买金额
+   */
+  cartBuyMoney: number;
 }
 
-export default Vue.extend<BuyCarState, {}, BuyCarComputed, {}>({
+interface BuyCarMehtod {
+  /**
+   * 创建订单
+   */
+  checkAndCreateOrder(buyOrRent: 'buy' | 'rent'): void;
+}
+
+export default Vue.extend<BuyCarState, BuyCarMehtod, BuyCarComputed, {}>({
   name: 'buyCar',
-  components: {
-    buyCatItem,
-  },
   computed: {
     cartList() {
       return this.$store.state.cartGoods;
+    },
+    cartRentMoney() {
+      return this.$store.state.cartRentMoney;
+    },
+    cartBuyMoney() {
+      return this.$store.state.cartBuyMoney;
+    },
+  },
+  methods: {
+    checkAndCreateOrder(buyOrRent: 'buy' | 'rent'): void {
+      // 创建订单
+      if (buyOrRent === 'rent') {
+        // 租赁
+        // 还没写
+        for (let i = 0; i < this.cartList.length; i += 1) {
+          if (this.cartList[i].orderType === 'buy') {
+            const good = this.cartList[i];
+            createRentOrder(good.gid, good.rent, good.num, 'fandouhuayuan 30#001')
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
+      } else {
+        // 购买
+        // 扫描订单，过滤出购买订单
+        for (let i = 0; i < this.cartList.length; i += 1) {
+          if (this.cartList[i].orderType === 'buy') {
+            const good = this.cartList[i];
+            createBugOrder(good.gid, good.num, 1)
+              .then((res) => {
+                console.log(res);
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        }
+      }
     },
   },
   mounted() {
@@ -60,11 +104,11 @@ export default Vue.extend<BuyCarState, {}, BuyCarComputed, {}>({
         good: null,
         method: 3,
       });
+      this.$store.commit('cartMoneyCheck');
       console.log(this.$store.state.cartGoods);
     }
   },
   data: () => ({
-    sheet: false,
     buyOrRent: 'buy',
   }),
 });
@@ -74,12 +118,11 @@ export default Vue.extend<BuyCarState, {}, BuyCarComputed, {}>({
 .cart {
   .bottom-sheet {
     position: relative;
-
-    .close-cart {
-      position: absolute;
-      right: 1rem;
-      top: 1rem;
-    }
+  }
+  .check-cart {
+    position: fixed;
+    right: 3rem;
+    bottom: 3rem;
   }
 }
 </style>

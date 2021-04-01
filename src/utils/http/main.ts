@@ -37,7 +37,11 @@ axios.interceptors.request.use(
 
 export type HttpData<T> = HttpSuccessData<T> | HttpErrorData;
 
-export async function httpBase<Req, Res>(method: 'get' | 'post' | 'put', url: string, data: Req): Promise<Res> {
+export async function httpBase<Req, Res>(
+  method: 'get' | 'post' | 'put' | 'delete',
+  url: string,
+  data: Req,
+): Promise<Res> {
   const resData: AxiosResponse<HttpData<Res>> = (await axios({
     method,
     data,
@@ -77,4 +81,8 @@ export async function httpPost<Req, Res>(url: string, data: Req): Promise<Res> {
 
 export async function httpPut<Req, Res>(url: string, data: Req): Promise<Res> {
   return await httpBase<Req, Res>('put', url, data);
+}
+
+export async function httpDelete<Req, Res>(url: string, data: Req): Promise<Res> {
+  return await httpBase<Req, Res>('delete', url, data);
 }

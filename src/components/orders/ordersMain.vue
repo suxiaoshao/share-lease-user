@@ -1,7 +1,11 @@
 <template>
   <div class="good-main">
     <v-container>
-      <!-- 如果以后有其他接口再写在这下面 -->
+      <v-tabs fixed-tabs background-color="indigo" dark>
+        <v-tab to="/orders/buy"> 购买订单 </v-tab>
+        <v-tab to="/orders/rent"> 租赁订单 </v-tab>
+      </v-tabs>
+      <router-view></router-view>
     </v-container>
   </div>
 </template>
@@ -89,6 +93,6 @@ export default Vue.extend<OrdersMainState, OrdersMainMethod, {}, {}>({
 .good-main {
   width: 100%;
   height: 100%;
-  background-color: #a12a;
+  background-color: whitesmoke;
 }
 </style>

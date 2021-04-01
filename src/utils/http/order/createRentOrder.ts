@@ -7,10 +7,11 @@ import { OrderDetail } from '@/utils/http/order/getOrderList';
  * @param rid 租金 id
  * @param address 地址
  * */
-export async function createRentOrder(gid: number, rid: number, address: string): Promise<OrderDetail> {
-  return await httpPost<{ gid: number; rid: number; address: string }, OrderDetail>('/order/createRentOrder', {
+export async function createRentOrder(gid: number, rid: number, num: number, address: string): Promise<OrderDetail> {
+  return await httpPost<{ gid: number; rid: number; num: number; address: string }, OrderDetail>('/order/rent', {
     gid,
     rid,
+    num,
     address,
   });
 }

@@ -32,13 +32,13 @@
           </v-list-item-icon>
           搜索
         </v-list-item>
-        <v-list-item v-if="$store.getters.isLogin" value="Orders" @click="pushRouter('Orders')">
+        <v-list-item v-if="$store.getters.isLogin" value="Orders" @click="pushRouter('OrderBuy')">
           <v-list-item-icon>
             <v-icon color="green darken-2">mdi-domain</v-icon>
           </v-list-item-icon>
           订单
         </v-list-item>
-        <v-list-item v-if="$store.getters.isLogin" value="BuyCar" @click="pushRouter('BuyCar')">
+        <v-list-item v-if="$store.getters.isLogin" value="BuyCar" @click="pushRouter('BuyCarBuy')">
           <v-list-item-icon>
             <v-icon>mdi-cart</v-icon>
           </v-list-item-icon>
