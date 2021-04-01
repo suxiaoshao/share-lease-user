@@ -4,6 +4,7 @@ import router from './utils/plugins/router';
 import vuetify from './utils/plugins/vuetify';
 import store from './utils/store/index';
 import { initUserInfoByLocal } from '@/utils/userInfoLocal';
+import { initUserAddressList } from '@/utils/userAddressInit';
 
 Vue.config.productionTip = false;
 
@@ -15,3 +16,4 @@ new Vue({
 }).$mount('#app');
 
 initUserInfoByLocal();
+initUserAddressList();

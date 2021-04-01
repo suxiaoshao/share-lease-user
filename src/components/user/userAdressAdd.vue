@@ -1,27 +1,29 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn text v-bind="attrs" v-on="on">添加地址</v-btn>
-    </template>
-    <v-card>
-      <v-card-title> 添加地址</v-card-title>
-      <!-- <al-selector v-model="res_s"/>
+  <div>
+    <v-dialog v-model="dialog" persistent max-width="600px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn text v-bind="attrs" v-on="on">添加地址</v-btn>
+      </template>
+      <v-card>
+        <v-card-title> 添加地址</v-card-title>
+        <!-- <al-selector v-model="res_s"/>
         <al-cascader v-model="res_c"/> -->
-      <v-card-text>
-        <v-spacer></v-spacer>
-        <v-text-field label="省份" v-model="address.province" />
-        <v-text-field label="城市" v-model="address.city" />
-        <v-text-field label="县/区" v-model="address.district" />
-        <v-text-field label="镇/街道" v-model="address.town" />
-        <v-text-field label="详细地址" v-model="address.address" />
-        <v-text-field label="手机号" v-model="address.phone" />
-        <v-text-field label="收件人" v-model="address.name" />
-        <v-btn color="pink darken-1" text @click="dialog = false">取消</v-btn>
-        <v-btn color="blue darken-1" text @click="addNewAddress">保存</v-btn>
-      </v-card-text>
-      <my-snackbar></my-snackbar>
-    </v-card>
-  </v-dialog>
+        <v-card-text>
+          <v-spacer></v-spacer>
+          <v-text-field label="省份" v-model="address.province" />
+          <v-text-field label="城市" v-model="address.city" />
+          <v-text-field label="县/区" v-model="address.district" />
+          <v-text-field label="镇/街道" v-model="address.town" />
+          <v-text-field label="详细地址" v-model="address.address" />
+          <v-text-field label="手机号" v-model="address.phone" />
+          <v-text-field label="收件人" v-model="address.name" />
+          <v-btn color="pink darken-1" text @click="dialog = false">取消</v-btn>
+          <v-btn color="blue darken-1" text @click="addNewAddress">保存</v-btn>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+    <my-snackbar></my-snackbar>
+  </div>
 </template>
 
 <script lang="ts">
@@ -95,6 +97,10 @@ export default Vue.extend<UserAddressState, UserAddressMethod, {}, {}>({
         .then((res) => {
           this.openMessage('地址添加成功');
           this.dialog = false;
+          this.$store.commit('updateUserAddress', {
+            method: -2,
+            address: [address],
+          });
         })
         .catch((err) => {
           console.log(err);

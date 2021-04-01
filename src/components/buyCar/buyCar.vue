@@ -85,7 +85,7 @@ export default Vue.extend<BuyCarState, BuyCarMehtod, BuyCarComputed, {}>({
         for (let i = 0; i < this.cartList.length; i += 1) {
           if (this.cartList[i].orderType === 'buy') {
             const good = this.cartList[i];
-            createBugOrder(good.gid, good.num, 'fandouhuayuan 30#001')
+            createBugOrder(good.gid, good.num, 1)
               .then((res) => {
                 console.log(res);
               })

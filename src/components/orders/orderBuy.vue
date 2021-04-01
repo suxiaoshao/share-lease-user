@@ -70,6 +70,7 @@ export default Vue.extend<OrderBuyState, OrderBuyMethod, {}, {}>({
       console.log(this.pageCur);
       getOrderList('status', 10, this.pageCur, 'ASC', 'create')
         .then((res) => {
+          console.log('get order list');
           console.log(res);
           if (res.length === 0) {
             // 页数上限

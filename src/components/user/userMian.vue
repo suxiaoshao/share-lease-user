@@ -28,7 +28,7 @@ import Vue from 'vue';
 import { UserInfo } from '@/utils/http/user/getInfo';
 import UserInfoView from '@/components/user/userInfoView.vue';
 import UserEdit from '@/components/user/userEdit.vue';
-import UserAdressEdit from '@/components/user/userAdressEdit.vue';
+import UserAdressEdit from '@/components/user/userAdressAdd.vue';
 import UserAdressView from '@/components/user/userAdressView.vue';
 import ResetPassword from '@/components/user/resetPassword.vue';
 
