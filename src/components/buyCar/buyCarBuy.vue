@@ -22,22 +22,11 @@
         </v-card-title>
 
         <v-card-actions>
-          <v-btn color="orange" rounded large @click="buyDialog = true">结算 </v-btn>
+          <v-btn color="orange" rounded large @click="toCreateOrders">结算 </v-btn>
         </v-card-actions>
       </div>
     </v-card>
-    <v-dialog v-model="buyDialog" persistent max-width="600px">
-      <v-card>
-        <v-card-title> 确认订单</v-card-title>
-        <v-card-text>
-          <v-spacer></v-spacer>
-          <v-select :items="userAddressSelect" :value="pickedAddress" label="地址" solo></v-select>
-          <v-btn color="pink darken-1" text @click="buyDialog = false">取消</v-btn>
-          <v-btn color="blue darken-1" text @click="checkAndCreateOrder('buy')">保存</v-btn>
-        </v-card-text>
-      </v-card>
-      <my-snackbar></my-snackbar>
-    </v-dialog>
+    <my-snackbar></my-snackbar>
   </v-container>
 </template>
 
@@ -97,6 +86,10 @@ interface BuyCarBuyMehtod {
    * 创建订单
    */
   checkAndCreateOrder(buyOrRent: 'buy' | 'rent'): void;
+  /**
+   * 跳转到创建订单页面
+   */
+  toCreateOrders(): void;
   /**
    * 提示
    */
@@ -158,6 +151,21 @@ export default Vue.extend<BuyCarBuyState, BuyCarBuyMehtod, BuyCarBuyComputed, {}
           }
         }
       }
+    },
+    toCreateOrders(): void {
+      // 创建订单
+      // 购买
+      // 扫描订单，过滤出购买订单
+      const goods: CartProp[] = [];
+      for (let i = 0; i < this.cartList.length; i += 1) {
+        if (this.cartList[i].orderType === 'buy') {
+          goods.push(this.cartList[i]);
+        }
+      }
+      this.$store.commit('updateOrdersCreateData', goods);
+      this.$router.push({
+        name: 'OrderOptCreate',
+      });
     },
     openMessage(message: string): void {
       this.message = {

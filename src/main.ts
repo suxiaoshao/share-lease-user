@@ -5,6 +5,7 @@ import vuetify from './utils/plugins/vuetify';
 import store from './utils/store/index';
 import { initUserInfoByLocal } from '@/utils/userInfoLocal';
 import { initUserAddressList } from '@/utils/userAddressInit';
+import { initUserCarts } from '@/utils/initUserCart';
 
 Vue.config.productionTip = false;
 
@@ -17,3 +18,4 @@ new Vue({
 
 initUserInfoByLocal();
 initUserAddressList();
+initUserCarts();

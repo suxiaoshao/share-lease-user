@@ -20,7 +20,7 @@
         </v-card-title>
 
         <v-card-actions>
-          <v-btn color="orange" rounded large @click="checkAndCreateOrder('rent')">结算 </v-btn>
+          <v-btn color="orange" rounded large @click="toCreateOrders">结算 </v-btn>
         </v-card-actions>
       </div>
     </v-card>
@@ -57,9 +57,9 @@ interface BuyCarBuyComputed {
 
 interface BuyCarBuyMehtod {
   /**
-   * 创建订单
+   * 跳转到创建订单页面
    */
-  checkAndCreateOrder(buyOrRent: 'buy' | 'rent'): void;
+  toCreateOrders(): void;
 }
 export default Vue.extend<BuyCarBuyState, BuyCarBuyMehtod, BuyCarBuyComputed, {}>({
   name: 'buycar-buy',
@@ -80,24 +80,20 @@ export default Vue.extend<BuyCarBuyState, BuyCarBuyMehtod, BuyCarBuyComputed, {}
   },
   // mounted() {},
   methods: {
-    checkAndCreateOrder(buyOrRent: 'buy' | 'rent'): void {
+    toCreateOrders(): void {
       // 创建订单
-      if (buyOrRent === 'rent') {
-        // 租赁
-        // 还没写
-        for (let i = 0; i < this.cartList.length; i += 1) {
-          if (this.cartList[i].orderType === 'buy') {
-            const good = this.cartList[i];
-            createRentOrder(good.gid, good.rent, good.num, 'fandouhuayuan 30#001')
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
+      // 租赁
+      // 扫描订单，过滤出购买订单
+      const goods: CartProp[] = [];
+      for (let i = 0; i < this.cartList.length; i += 1) {
+        if (this.cartList[i].orderType === 'rent') {
+          goods.push(this.cartList[i]);
         }
       }
+      this.$store.commit('updateOrdersCreateData', goods);
+      this.$router.push({
+        name: 'OrderOptCreate',
+      });
     },
   },
 });

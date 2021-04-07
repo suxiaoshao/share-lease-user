@@ -43,6 +43,7 @@ const mutations: MutationTree<State> = {
           num: 1,
           orderType: 'buy',
         };
+        console.log('isNerGood: ', isNewGood);
         state.cartGoods.unshift(item);
       }
       localStorage.setItem(`${state.userInfo?.email}-cart`, JSON.stringify(state.cartGoods));
@@ -63,6 +64,7 @@ const mutations: MutationTree<State> = {
       const items = localStorage.getItem(`${state.userInfo?.email}-cart`);
       if (items) {
         state.cartGoods = JSON.parse(items);
+        console.log('init carts: ', state.cartGoods);
       }
     } else if (payload.method === 4) {
       // change type
@@ -121,6 +123,14 @@ const mutations: MutationTree<State> = {
         }
       }
     }
+  },
+  /**
+   * 更新传输的订单数据（购物车页-> 创建订单页
+   * @param cartData
+   */
+  updateOrdersCreateData(state: State, cartData: CartProp[]) {
+    state.ordersCreateData = cartData;
+    console.log(state.ordersCreateData);
   },
 };
 
