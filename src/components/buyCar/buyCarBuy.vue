@@ -1,19 +1,11 @@
 <template>
   <v-container fluid class="buy-car-buy">
-    <v-row justify="space-around">
-      <!-- expend items -->
-      <v-container>
-        <v-row dense style="margin-top: 1.5rem">
-          <v-col v-for="(item, i) in cartList" :key="i" cols="6" v-show="item.orderType === 'buy'">
-            <buy-cat-item :itemProp="item"></buy-cat-item>
-          </v-col>
-        </v-row>
-      </v-container>
-      <div class="order-page">
-        <v-btn rounded @click="getOrders('prev')">&lt;</v-btn>
-        <v-btn rounded @click="getOrders('next')">&gt;</v-btn>
-      </div>
-    </v-row>
+    <!-- expend items -->
+    <v-container>
+      <v-card v-for="(item, i) in cartList" :key="i" v-show="item.orderType === 'buy'">
+        <buy-cat-item :itemProp="item"></buy-cat-item>
+      </v-card>
+    </v-container>
     <!-- 金额记录 -->
     <v-card color="#385F73" dark max-width="400px" class="check-cart">
       <div class="d-flex">
@@ -26,7 +18,7 @@
         </v-card-actions>
       </div>
     </v-card>
-    <my-snackbar></my-snackbar>
+    <my-snackbar :message="message"></my-snackbar>
   </v-container>
 </template>
 
@@ -182,11 +174,12 @@ export default Vue.extend<BuyCarBuyState, BuyCarBuyMehtod, BuyCarBuyComputed, {}
   .check-cart {
     position: fixed;
     right: 3rem;
-    bottom: 3rem;
+    bottom: 1rem;
+    z-index: 11;
   }
   .order-page {
     position: fixed;
-    bottom: 3rem;
+    bottom: 1rem;
   }
 }
 </style>

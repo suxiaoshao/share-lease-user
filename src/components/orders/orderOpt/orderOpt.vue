@@ -46,18 +46,6 @@ interface OrdersMainState {
 
 export default Vue.extend<OrdersMainState, OrdersMainMethod, {}, {}>({
   name: 'goodMain',
-
-  mounted() {
-    // 获取订单列表
-    getOrderList('createTime', this.pageSize, this.pageNum, this.orderRule)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-
   data: () => ({
     goodID: '1',
     goodInfo: null,

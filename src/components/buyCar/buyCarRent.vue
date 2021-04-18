@@ -2,16 +2,10 @@
   <v-container fluid class="buy-car-rent">
     <v-row justify="space-around">
       <v-container>
-        <v-row dense style="margin-top: 1.5rem">
-          <v-col v-for="(item, i) in cartList" :key="i" cols="6" v-show="item.orderType === 'rent'">
-            <buy-cat-item :itemProp="item"></buy-cat-item>
-          </v-col>
-        </v-row>
+        <v-card v-for="(item, i) in cartList" :key="i" v-show="item.orderType === 'rent'">
+          <buy-cat-item :itemProp="item"></buy-cat-item>
+        </v-card>
       </v-container>
-      <div class="order-page">
-        <v-btn rounded @click="getOrders('prev')">&lt;</v-btn>
-        <v-btn rounded @click="getOrders('next')">&gt;</v-btn>
-      </div>
     </v-row>
     <v-card color="#385F73" light max-width="400px" class="check-cart">
       <div class="d-flex">
@@ -30,10 +24,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import buyCatItem from '@/components/buyCar/buyCarItem.vue';
-import { createRentOrder } from '@/utils/http/order/createRentOrder';
 import { CartProp } from '@/utils/store/state';
 
-interface BuyCarBuyState {
+interface BuyCarRentState {
   /**
    * 订单类型
    */
@@ -44,7 +37,7 @@ interface BuyCarBuyState {
   pageCur: number;
 }
 
-interface BuyCarBuyComputed {
+interface BuyCarRentComputed {
   /**
    * 购物车列表
    */
@@ -55,13 +48,13 @@ interface BuyCarBuyComputed {
   cartRentMoney: number;
 }
 
-interface BuyCarBuyMehtod {
+interface BuyCarRentMehtod {
   /**
    * 跳转到创建订单页面
    */
   toCreateOrders(): void;
 }
-export default Vue.extend<BuyCarBuyState, BuyCarBuyMehtod, BuyCarBuyComputed, {}>({
+export default Vue.extend<BuyCarRentState, BuyCarRentMehtod, BuyCarRentComputed, {}>({
   name: 'buycar-buy',
   data: () => ({
     buyOrRent: 'buy',
@@ -75,7 +68,7 @@ export default Vue.extend<BuyCarBuyState, BuyCarBuyMehtod, BuyCarBuyComputed, {}
       return this.$store.state.cartGoods;
     },
     cartRentMoney() {
-      return this.$store.state.cartBuyMoney;
+      return this.$store.state.cartRentMoney;
     },
   },
   // mounted() {},

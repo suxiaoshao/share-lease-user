@@ -1,33 +1,4 @@
 <template>
-  <!-- <v-container>
-    <v-card>
-      <v-card-title> 确认订单</v-card-title>
-      <v-list two-line>
-        <v-list-item-group v-model="selectedAddress" active-class="pink--text">
-          <template v-for="(item, index) in addressAll">
-            <v-list-item :key="item.aid" @click="selectThisAddress(index)">
-              <template>
-                <v-list-item-content>
-                  <v-list-item-title v-text="item.name"></v-list-item-title>
-
-                  <v-list-item-subtitle class="text--primary" v-text="item.phone"></v-list-item-subtitle>
-
-                  <v-list-item-subtitle
-                    >{{ item.province }}{{ item.city }}{{ item.district }}{{ item.town
-                    }}{{ item.address }}</v-list-item-subtitle
-                  >
-                </v-list-item-content>
-              </template>
-            </v-list-item>
-          </template>
-        </v-list-item-group>
-      </v-list>
-      <v-btn color="pink darken-1" text @click="buyDialog = false">取消</v-btn>
-      <v-btn color="blue darken-1" text @click="checkAndCreateOrder('buy')">保存</v-btn>
-    </v-card>
-    <my-snackbar></my-snackbar>
-    
-  </v-container> -->
   <form>
     <h1>创建订单</h1>
     <v-card>
@@ -182,6 +153,9 @@ export default Vue.extend<CreateOrderState, CreateOrderMethod, CreateOrderComput
               this.$store.commit('updateCartGoods', {
                 method: 2,
                 good: this.ordersCreateData[i],
+              });
+              this.$router.push({
+                name: 'OrderDoing',
               });
             })
             .catch((err) => {

@@ -1,79 +1,66 @@
 <template>
   <v-container fluid class="orders-buy">
     <v-row justify="space-around">
-      <v-col cols="5">
-        <div class="title mb-1">Default (cover)</div>
-        <div class="subheading">Matching</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>
-        <div class="subheading pt-4">Too high</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="2"></v-img>
-        <div class="subheading pt-4">Too low</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.4"></v-img>
+      <v-col v-for="item in Orders" :key="item.oid">
+        <orderItem :orderInfo="item"></orderItem>
       </v-col>
-
-      <v-col cols="5">
-        <div class="title mb-1">Contain</div>
-        <div class="subheading">Matching</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7" contain></v-img>
-        <div class="subheading pt-4">Too high</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="2" contain></v-img>
-        <div class="subheading pt-4">Too low</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.4" contain></v-img>
-      </v-col>
-      <div class="order-page">
-        <v-btn rounded @click="getOrders('prev')">&lt;</v-btn>
-        <v-btn rounded @click="getOrders('next')">&gt;</v-btn>
-      </div>
+      <v-pagination v-show="pages > 0" @input="getOrders" v-model="curPage" :length="pages" circle></v-pagination>
     </v-row>
   </v-container>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { getOrderList, OrderDetail } from '@/utils/http/order/getOrderList';
+import { getOrderList } from '@/utils/http/order/getOrderList';
+import orderItem from '@/components/orders/orderDetail/orderRentItem.vue';
+import { OrderProp } from '@/utils/http/order/getOrderList';
 
-interface OrderBuyState {
+interface OrdeRentState {
   /**
    * 订单列表
    */
-  buyOrders: OrderDetail[];
+  Orders: OrderProp[];
   /**
-   * 当前订单页
+   * 订单总页数
    */
-  pageCur: number;
+  pages: number;
+  /**
+   * 当前页
+   */
+  curPage: number;
 }
 
-interface OrderBuyMethod {
+interface OrdeRentMethod {
   /**
    * 分页获取订单
    */
-  getOrders(to: string): void;
+  getOrders(to: number): void;
 }
 
-export default Vue.extend<OrderBuyState, OrderBuyMethod, {}, {}>({
-  name: 'order-buy',
+export default Vue.extend<OrdeRentState, OrdeRentMethod, {}, {}>({
+  name: 'order-rent',
+  components: { orderItem },
   data: () => ({
-    buyOrders: [],
-    pageCur: -1,
+    Orders: [],
+    pages: 1,
+    curPage: 1,
   }),
   mounted() {
-    this.getOrders('next');
+    this.getOrders(-1);
   },
   methods: {
-    getOrders(to: string) {
-      if (to === 'next') {
-        this.pageCur += 1;
-      } else if (to === 'prev') {
-        this.pageCur -= 1;
-        if (this.pageCur < 0) this.pageCur = 0;
+    getOrders(to: number) {
+      console.log(to);
+      if (to !== -1) {
+        this.curPage = to;
       }
-      console.log(this.pageCur);
-      getOrderList('status', 10, this.pageCur, 'ASC', 'create')
+      getOrderList('status', 10, this.curPage - 1, 'ASC', 'rent')
         .then((res) => {
           console.log(res);
-          if (res.length === 0) {
-            // 页数上限
-            this.pageCur -= 1;
+          this.pages = Math.ceil(res.total / res.pageSize);
+          this.Orders = [];
+          for (let i = 0; i < res.list.length; i += 1) {
+            if (res.list[i].pledge !== -1) this.Orders.push(res.list[i]);
           }
         })
         .catch((err) => {

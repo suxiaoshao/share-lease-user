@@ -3,8 +3,9 @@
     <v-container>
       <v-tabs fixed-tabs background-color="indigo" dark>
         <v-tab to="/orders/detail/buy"> 购买订单 </v-tab>
-        <v-tab to="/orders/detail/rent"> 租赁订单 </v-tab>
+        <v-tab to="/orders/detail/rent"> 租金订单 </v-tab>
       </v-tabs>
+
       <router-view></router-view>
     </v-container>
   </div>
@@ -14,7 +15,7 @@
 import Vue from 'vue';
 // import { good } from '@/utils/http/good/good';
 import { GoodProp } from '@/utils/http/good/goodList';
-import { getOrderList, OrderDetail } from '@/utils/http/order/getOrderList';
+import { OrderDetail } from '@/utils/http/order/getOrderList';
 
 interface OrderDetailMethod {
   /**
@@ -52,17 +53,6 @@ interface OrderDetailState {
 
 export default Vue.extend<OrderDetailState, OrderDetailMethod, {}, {}>({
   name: 'goodMain',
-
-  mounted() {
-    // 获取订单列表
-    getOrderList('createTime', this.pageSize, this.pageNum, this.orderRule)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
 
   data: () => ({
     goodID: '1',

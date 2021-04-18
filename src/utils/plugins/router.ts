@@ -63,6 +63,11 @@ const routes: Array<RouteConfig> = [
     ],
   },
   {
+    path: '/pay',
+    name: 'PayGateWay',
+    component: () => import('@/components/orders/payGateWay.vue'),
+  },
+  {
     path: '/buyCar',
     name: 'BuyCar',
     component: () => import('../../views/BuyCar.vue'),

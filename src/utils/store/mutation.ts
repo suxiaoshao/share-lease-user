@@ -5,17 +5,22 @@ import { CartProp } from '@/utils/store/state';
 import { GoodProp } from '@/utils/http/good/goodList';
 import { UserAdress } from '@/utils/http/user/addNewAddress';
 import router, { afterLoginPage } from '@/utils/plugins/router';
+import { initUserAddressList } from '@/utils/userAddressInit';
+import { initUserCarts } from '@/utils/initUserCart';
 
 const mutations: MutationTree<State> = {
   login(state: State, userInfo: UserInfo | null) {
     if (userInfo !== null) {
       window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+      initUserAddressList();
+      initUserCarts();
     } else {
       window.localStorage.removeItem('userInfo');
       if (afterLoginPage.includes(router.app.$route.name ?? '*')) {
         router.push({ name: 'Home' }).then();
       }
     }
+
     state.userInfo = userInfo;
   },
   searchGood(state: State, content: string) {
@@ -92,6 +97,8 @@ const mutations: MutationTree<State> = {
         rentMoney += state.cartGoods[i].num * state.cartGoods[i].rent;
       }
     }
+    console.log('buy: ', buyMoney);
+    console.log('rent: ', rentMoney);
     state.cartBuyMoney = buyMoney;
     state.cartRentMoney = rentMoney;
   },

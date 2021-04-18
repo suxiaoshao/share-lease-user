@@ -35,13 +35,14 @@ export default Vue.extend<SearchBarState, SearchBarMethod, {}, {}>({
   methods: {
     toSearchGoods(): void {
       if (this.searchContent !== '') {
+        console.log(this.searchContent);
+        this.$store.commit('searchGood', this.searchContent);
         this.$router.push({
           name: 'Search',
           query: {
             keyword: this.searchContent,
           },
         });
-        this.$store.commit('searchGood', this.searchContent);
       }
     },
   },

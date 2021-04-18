@@ -1,85 +1,92 @@
 <template>
   <v-container fluid class="orders-buy">
+    <v-select :items="orderStates" label="筛选订单" @change="selectOrders"></v-select>
     <v-row justify="space-around">
-      <v-col cols="5">
-        <div class="title mb-1">Default (cover)</div>
-        <div class="subheading">Matching</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>
-        <div class="subheading pt-4">Too high</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="2"></v-img>
-        <div class="subheading pt-4">Too low</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.4"></v-img>
+      <v-col v-for="item in newOrders" :key="item.oid">
+        <orderItem :orderInfo="item"></orderItem>
       </v-col>
-
-      <v-col cols="5">
-        <div class="title mb-1">Contain</div>
-        <div class="subheading">Matching</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7" contain></v-img>
-        <div class="subheading pt-4">Too high</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="2" contain></v-img>
-        <div class="subheading pt-4">Too low</div>
-        <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.4" contain></v-img>
-      </v-col>
-      <div class="order-page">
-        <v-btn rounded @click="getOrders('prev')">&lt;</v-btn>
-        <v-btn rounded @click="getOrders('next')">&gt;</v-btn>
-      </div>
+      <v-pagination @input="getOrders" v-model="curPage" :length="pages" circle></v-pagination>
     </v-row>
   </v-container>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
-import { getOrderList, OrderDetail } from '@/utils/http/order/getOrderList';
+import { getOrderList } from '@/utils/http/order/getOrderList';
+import orderItem from '@/components/orders/orderDetail/orderBuyItem.vue';
+import { OrderProp } from '@/utils/http/order/getOrderList';
 
 interface OrderBuyState {
   /**
    * 订单列表
    */
-  buyOrders: OrderDetail[];
+  Orders: OrderProp[];
   /**
-   * 当前订单页
+   * 筛选后的订单
    */
-  pageCur: number;
+  newOrders: OrderProp[];
+  /**
+   * 订单总页数
+   */
+  pages: number;
+  /**
+   * 当前页
+   */
+  curPage: number;
+  /**
+   * 订单状态
+   */
+  orderStates: string[];
 }
 
 interface OrderBuyMethod {
   /**
    * 分页获取订单
    */
-  getOrders(to: string): void;
+  getOrders(to: number): void;
+  /**
+   * 选择订单
+   */
+  selectOrders(e: string): void;
 }
 
 export default Vue.extend<OrderBuyState, OrderBuyMethod, {}, {}>({
   name: 'order-buy',
+  components: { orderItem },
   data: () => ({
-    buyOrders: [],
-    pageCur: -1,
+    Orders: [],
+    pages: 1,
+    curPage: 1,
+    orderStates: ['全部订单', 'overtime', 'payed', 'waiting', 'abandon', 'abandoned', 'finish', 'expressing'],
+    newOrders: [],
   }),
   mounted() {
-    this.getOrders('next');
+    this.getOrders(-1);
   },
   methods: {
-    getOrders(to: string) {
-      if (to === 'next') {
-        this.pageCur += 1;
-      } else if (to === 'prev') {
-        this.pageCur -= 1;
-        if (this.pageCur < 0) this.pageCur = 0;
+    getOrders(to: number) {
+      console.log(to);
+      if (to !== -1) {
+        this.curPage = to;
       }
-      console.log(this.pageCur);
-      getOrderList('status', 10, this.pageCur, 'ASC', 'create')
+      getOrderList('status', 10, this.curPage - 1, 'ASC', 'buy')
         .then((res) => {
-          console.log('get order list');
           console.log(res);
-          if (res.length === 0) {
-            // 页数上限
-            this.pageCur -= 1;
-          }
+          this.pages = Math.ceil(res.total / res.pageSize);
+          this.Orders = res.list;
+          this.newOrders = res.list;
         })
         .catch((err) => {
           console.log(err);
         });
+    },
+    selectOrders(e: string): void {
+      console.log(e);
+      this.newOrders = [];
+      for (let i = 0; i < this.Orders.length; i += 1) {
+        if (this.Orders[i].status === e || e === '全部订单') this.newOrders.push(this.Orders[i]);
+      }
+      console.log(this.newOrders);
     },
   },
 });

@@ -15,8 +15,6 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { createBugOrder } from '@/utils/http/order/createBugOrder';
-import { createRentOrder } from '@/utils/http/order/createRentOrder';
 import { CartProp } from '@/utils/store/state';
 
 interface BuyCarState {
@@ -41,14 +39,9 @@ interface BuyCarComputed {
   cartBuyMoney: number;
 }
 
-interface BuyCarMehtod {
-  /**
-   * 创建订单
-   */
-  checkAndCreateOrder(buyOrRent: 'buy' | 'rent'): void;
-}
+// interface BuyCarMehtod {}
 
-export default Vue.extend<BuyCarState, BuyCarMehtod, BuyCarComputed, {}>({
+export default Vue.extend<BuyCarState, {}, BuyCarComputed, {}>({
   name: 'buyCar',
   computed: {
     cartList() {
@@ -59,42 +52,6 @@ export default Vue.extend<BuyCarState, BuyCarMehtod, BuyCarComputed, {}>({
     },
     cartBuyMoney() {
       return this.$store.state.cartBuyMoney;
-    },
-  },
-  methods: {
-    checkAndCreateOrder(buyOrRent: 'buy' | 'rent'): void {
-      // 创建订单
-      if (buyOrRent === 'rent') {
-        // 租赁
-        // 还没写
-        for (let i = 0; i < this.cartList.length; i += 1) {
-          if (this.cartList[i].orderType === 'buy') {
-            const good = this.cartList[i];
-            createRentOrder(good.gid, good.rent, good.num, 'fandouhuayuan 30#001')
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-        }
-      } else {
-        // 购买
-        // 扫描订单，过滤出购买订单
-        for (let i = 0; i < this.cartList.length; i += 1) {
-          if (this.cartList[i].orderType === 'buy') {
-            const good = this.cartList[i];
-            createBugOrder(good.gid, good.num, 1)
-              .then((res) => {
-                console.log(res);
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          }
-        }
-      }
     },
   },
   mounted() {
