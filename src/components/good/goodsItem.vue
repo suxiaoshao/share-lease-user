@@ -1,8 +1,8 @@
 <template>
   <div class="goodsItem">
     <v-hover v-slot="{ hover }">
-      <v-card class="mx-auto" color="grey lighten-4" max-width="600" @click="toGoodDetail">
-        <v-img :aspect-ratio="16 / 9" :src="goodInfo.picUrl">
+      <v-card class="mx-auto" color="grey lighten-4" @click="toGoodDetail">
+        <v-img :aspect-ratio="16 / 9" :lazy-src="goodInfo.picUrl">
           <v-expand-transition>
             <div
               v-if="hover"
@@ -65,9 +65,13 @@ export default Vue.extend<{}, GoodItemMethod, {}, GoodItemProp>({
     },
     toGoodDetail() {
       console.log('good detail');
-      this.$router.push({
-        path: `/good/${this.goodInfo.gid}`,
-      });
+      this.$router
+        .push({
+          path: `/good/${this.goodInfo.gid}`,
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
 });

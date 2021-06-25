@@ -1,19 +1,11 @@
 <template>
   <v-container fluid class="buy-car-buy">
-    <v-row justify="space-around">
-      <!-- expend items -->
-      <v-container>
-        <v-row dense style="margin-top: 1.5rem">
-          <v-col v-for="(item, i) in cartList" :key="i" cols="6" v-show="item.orderType === 'buy'">
-            <buy-cat-item :itemProp="item"></buy-cat-item>
-          </v-col>
-        </v-row>
-      </v-container>
-      <div class="order-page">
-        <v-btn rounded @click="getOrders('prev')">&lt;</v-btn>
-        <v-btn rounded @click="getOrders('next')">&gt;</v-btn>
-      </div>
-    </v-row>
+    <!-- expend items -->
+    <v-container>
+      <v-card v-for="(item, i) in cartList" :key="i" v-show="item.orderType === 'buy'">
+        <buy-cat-item :itemProp="item"></buy-cat-item>
+      </v-card>
+    </v-container>
     <!-- 金额记录 -->
     <v-card color="#385F73" dark max-width="400px" class="check-cart">
       <div class="d-flex">
@@ -22,22 +14,11 @@
         </v-card-title>
 
         <v-card-actions>
-          <v-btn color="orange" rounded large @click="buyDialog = true">结算 </v-btn>
+          <v-btn color="orange" rounded large @click="toCreateOrders">结算 </v-btn>
         </v-card-actions>
       </div>
     </v-card>
-    <v-dialog v-model="buyDialog" persistent max-width="600px">
-      <v-card>
-        <v-card-title> 确认订单</v-card-title>
-        <v-card-text>
-          <v-spacer></v-spacer>
-          <v-select :items="userAddressSelect" :value="pickedAddress" label="地址" solo></v-select>
-          <v-btn color="pink darken-1" text @click="buyDialog = false">取消</v-btn>
-          <v-btn color="blue darken-1" text @click="checkAndCreateOrder('buy')">保存</v-btn>
-        </v-card-text>
-      </v-card>
-      <my-snackbar></my-snackbar>
-    </v-dialog>
+    <my-snackbar :message="message"></my-snackbar>
   </v-container>
 </template>
 
@@ -97,6 +78,10 @@ interface BuyCarBuyMehtod {
    * 创建订单
    */
   checkAndCreateOrder(buyOrRent: 'buy' | 'rent'): void;
+  /**
+   * 跳转到创建订单页面
+   */
+  toCreateOrders(): void;
   /**
    * 提示
    */
@@ -159,6 +144,21 @@ export default Vue.extend<BuyCarBuyState, BuyCarBuyMehtod, BuyCarBuyComputed, {}
         }
       }
     },
+    toCreateOrders(): void {
+      // 创建订单
+      // 购买
+      // 扫描订单，过滤出购买订单
+      const goods: CartProp[] = [];
+      for (let i = 0; i < this.cartList.length; i += 1) {
+        if (this.cartList[i].orderType === 'buy') {
+          goods.push(this.cartList[i]);
+        }
+      }
+      this.$store.commit('updateOrdersCreateData', goods);
+      this.$router.push({
+        name: 'OrderOptCreate',
+      });
+    },
     openMessage(message: string): void {
       this.message = {
         message,
@@ -174,11 +174,12 @@ export default Vue.extend<BuyCarBuyState, BuyCarBuyMehtod, BuyCarBuyComputed, {}
   .check-cart {
     position: fixed;
     right: 3rem;
-    bottom: 3rem;
+    bottom: 1rem;
+    z-index: 11;
   }
   .order-page {
     position: fixed;
-    bottom: 3rem;
+    bottom: 1rem;
   }
 }
 </style>

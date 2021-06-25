@@ -1,22 +1,93 @@
 import { httpGet } from '@/utils/http/main';
+import { GoodProp } from '@/utils/http/good/goodList';
 
-export interface OrderDetail {
+export type StatusType =
+  | 'create'
+  | 'expressed'
+  | 'expressing'
+  | 'paying'
+  | 'finish'
+  | 'abandon'
+  | 'abandoned'
+  | 'payed'
+  | 'overtime'
+  | 'expired'
+  | 'revert'
+  | 'waiting';
+
+export interface Merchant {
+  /**
+   * 商家id
+   */
+  mid: 1;
+  /**
+   * 店铺名
+   */
+  name: string;
+  /**
+   * 店铺简介
+   */
+  info: string;
+  /**
+   * 店主id
+   */
+  uid: number;
+}
+
+export interface OrderProp {
+  /**
+   * 地址
+   * */
+  address: string;
+  /**
+   * 创建时间
+   * */
+  createTime: string;
+  /**
+   * 到期时间
+   * */
+  expiredTime: number;
+  /**
+   * 快递
+   */
+  express: string;
+  /**
+   * 商品
+   */
+  good: GoodProp;
+  /**
+   * 金额
+   */
+  money: number;
+  /**
+   * 收件人姓名
+   */
+  name: string;
+  /**
+   * 数量
+   */
+  num: number;
   /**
    * 订单号
-   * */
+   */
   oid: number;
   /**
-   * 商品号
+   * 状态
    * */
-  gid: number;
+  status: StatusType;
+  revert: string | null;
   /**
-   * 用户号
-   * */
-  uid: number;
+   * 商家信息
+   */
+  merchant: Merchant;
   /**
-   * 价格
-   * */
-  money: number;
+   * 收件人手机号
+   */
+  phone: string;
+  /**
+   * 订单号
+   */
+  pid: string;
   /**
    * 保证金
    * */
@@ -26,23 +97,40 @@ export interface OrderDetail {
    * */
   time: number;
   /**
-   * 到期时间
-   * */
-  expiredTime: number;
+   * 购买用户的id
+   */
+  uid: number;
+}
+
+export interface OrderDetail {
   /**
-   * 创建时间
-   * */
-  createTime: string;
+   * 有无下一页
+   */
+  hasNextPage: boolean;
   /**
-   * 状态
-   * */
-  status: string;
-  expired: string | null;
-  revert: string | null;
+   * 有无前一页
+   */
+  hasPreviousPage: boolean;
   /**
-   * 地址
-   * */
-  address: string;
+   * 是否是第一页
+   */
+  isFirstPage: boolean;
+  /**
+   * 是否是最后一页
+   */
+  isLastPage: boolean;
+  /**
+   * 总数
+   */
+  total: number;
+  /**
+   * 页的大小
+   */
+  pageSize: number;
+  /**
+   * 订单列表
+   */
+  list: OrderProp[];
 }
 
 /**
@@ -52,17 +140,19 @@ export interface OrderDetail {
  * @param pageNum 页码
  * @param orderRule 正序倒叙
  * @param status 状态,可以无，代表筛选所有
+ * @param type 状态,可以无，代表筛选所有
  * */
 export async function getOrderList(
   orderBy: 'status' | 'createTime',
   pageSize: number,
   pageNum: number,
   orderRule: 'ASC' | 'DESC',
+  type: 'rent' | 'buy',
   status?: 'create',
-): Promise<OrderDetail[]> {
+): Promise<OrderDetail> {
   const url =
     status === undefined
-      ? `/order?orderBy=${orderBy}&pageSize=${pageSize}&pageNum=${pageNum}&orderRule=${orderRule}`
-      : `/order?orderBy=${orderBy}&pageSize=${pageSize}&pageNum=${pageNum}&orderRule=${orderRule}&status=${status}`;
-  return await httpGet<undefined, OrderDetail[]>(url, undefined);
+      ? `/order?orderBy=${orderBy}&pageSize=${pageSize}&pageNum=${pageNum}&orderRule=${orderRule}&type=${type}`
+      : `/order?orderBy=${orderBy}&pageSize=${pageSize}&pageNum=${pageNum}&orderRule=${orderRule}&status=${status}&type=${type}`;
+  return await httpGet<undefined, OrderDetail>(url, undefined);
 }

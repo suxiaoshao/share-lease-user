@@ -26,8 +26,8 @@
         <v-btn color="pink darken-1" text @click="dialog = false">取消</v-btn>
         <v-btn color="blue darken-1" text @click="changePassword">保存</v-btn>
       </v-card-actions>
-      <my-snackbar></my-snackbar>
     </v-card>
+    <my-snackbar v-model="message"></my-snackbar>
   </v-dialog>
 </template>
 

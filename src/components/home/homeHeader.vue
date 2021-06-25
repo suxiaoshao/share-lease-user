@@ -2,7 +2,7 @@
   <!-- 轮播图 -->
   <v-carousel class="header" cycle hide-delimiter-background show-arrows-on-hover>
     <v-carousel-item @click="seeGoodDetail(item.gid)" v-for="item in headerGoods" :key="item.gid">
-      <v-img style="width: 100%" :src="item.picUrl"></v-img>
+      <v-img max-height="400px" :src="item.picUrl"></v-img>
     </v-carousel-item>
   </v-carousel>
 </template>

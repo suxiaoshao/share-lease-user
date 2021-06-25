@@ -38,6 +38,10 @@ export interface State {
    * 用户地址列表
    */
   userAddressList: UserAdress[];
+  /**
+   * 创建订单时用于传输数据
+   */
+  ordersCreateData: CartProp[];
 }
 
 export const state: State = {
@@ -48,4 +52,5 @@ export const state: State = {
   cartRentMoney: 0,
   cartBuyMoney: 0,
   userAddressList: [],
+  ordersCreateData: [],
 };

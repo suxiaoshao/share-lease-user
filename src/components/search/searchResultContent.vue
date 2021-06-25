@@ -58,8 +58,9 @@
     </v-container>
     <v-container>
       <div class="text-center page-nav">
-        <v-btn dark @click="switchPage('before')">&lt;</v-btn>
-        <v-btn dark @click="switchPage('after')">&gt;</v-btn>
+        <!-- <v-btn dark @click="switchPage('before')">&lt;</v-btn>
+        <v-btn dark @click="switchPage('after')">&gt;</v-btn> -->
+        <v-pagination v-model="searchProp.pageNum" :length="totalPage" circle></v-pagination>
       </div>
     </v-container>
     <my-snackbar v-model="message"></my-snackbar>
@@ -89,6 +90,10 @@ interface SearchResultContentState {
   minPrice: number; // 用于绑定用户输入的最低价格
   maxPrice: number; // 用于绑定用户输入的最高价格
   message: Message; // 消息条
+  /**
+   * 总页数
+   */
+  totalPage: number;
 }
 
 interface SearchResultContentMethod {
@@ -138,6 +143,7 @@ export default Vue.extend<SearchResultContentState, SearchResultContentMethod, {
       message: '',
       open: false,
     },
+    totalPage: 0,
   }),
 
   components: { searchBar, goodsItem, MySnackbar },
@@ -149,6 +155,9 @@ export default Vue.extend<SearchResultContentState, SearchResultContentMethod, {
 
   methods: {
     searchGoods(): void {
+      console.log('search');
+      console.log(this.searchProp.keyword);
+      this.parseSearchArgs();
       search(
         this.searchProp.keyword,
         this.searchProp.pageSize,
@@ -159,8 +168,9 @@ export default Vue.extend<SearchResultContentState, SearchResultContentMethod, {
         this.searchProp.max,
       )
         .then((res) => {
-          this.goodList = res;
-          console.log(this.goodList);
+          this.goodList = [];
+          for (let i = 1; i < res.length; i += 1) this.goodList.push(res[i]);
+          this.totalPage = Math.ceil(res[0].total / this.searchProp.pageSize);
         })
         .catch((res: Error) => {
           console.log(res);
@@ -244,12 +254,6 @@ export default Vue.extend<SearchResultContentState, SearchResultContentMethod, {
 
   .good-list {
     margin: 0 auto;
-  }
-
-  .page-nav {
-    position: fixed;
-    bottom: 3rem;
-    left: 48%;
   }
 }
 </style>

@@ -1,6 +1,13 @@
 <template>
   <div class="good-main">
-    <router-view></router-view>
+    <v-container>
+      <v-tabs fixed-tabs background-color="indigo" dark>
+        <v-tab to="/orders/detail/buy"> 购买订单 </v-tab>
+        <v-tab to="/orders/detail/rent"> 租金订单 </v-tab>
+      </v-tabs>
+
+      <router-view></router-view>
+    </v-container>
   </div>
 </template>
 
@@ -8,16 +15,16 @@
 import Vue from 'vue';
 // import { good } from '@/utils/http/good/good';
 import { GoodProp } from '@/utils/http/good/goodList';
-import { getOrderList, OrderDetail } from '@/utils/http/order/getOrderList';
+import { OrderDetail } from '@/utils/http/order/getOrderList';
 
-interface OrdersMainMethod {
+interface OrderDetailMethod {
   /**
    * 解析url参数
    */
   parseGoodArgs(): void;
 }
 
-interface OrdersMainState {
+interface OrderDetailState {
   /**
    * 商品的id
    */
@@ -44,8 +51,9 @@ interface OrdersMainState {
   orderRule: 'ASC' | 'DESC';
 }
 
-export default Vue.extend<OrdersMainState, OrdersMainMethod, {}, {}>({
+export default Vue.extend<OrderDetailState, OrderDetailMethod, {}, {}>({
   name: 'goodMain',
+
   data: () => ({
     goodID: '1',
     goodInfo: null,

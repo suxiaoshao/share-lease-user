@@ -35,6 +35,10 @@ export interface GoodProp {
   mid: number;
 }
 
+export interface GoodList extends GoodProp {
+  total: number;
+}
+
 /**
  * @description 获取商品列表
  * @param pageSize 每页大小
@@ -47,9 +51,18 @@ export async function getGoodList(
   pageNum: number,
   orderRule: 'ASC' | 'DESC',
   orderBy: 'price' | 'gid' | 'rent',
-): Promise<GoodProp[]> {
-  return await httpGet<undefined, GoodProp[]>(
+): Promise<GoodList[]> {
+  const data = await httpGet<undefined, [{ total: number }, ...GoodProp[]]>(
     `/good?pageSize=${pageSize}&pageNum=${pageNum}&orderRule=${orderRule}&orderBY=${orderBy}`,
     undefined,
   );
+  const total = data[0].total;
+  const goods: GoodList[] = [];
+  for (let i = 1; i < data.length; i += 1) {
+    goods.push({
+      total,
+      ...data[i],
+    });
+  }
+  return goods;
 }

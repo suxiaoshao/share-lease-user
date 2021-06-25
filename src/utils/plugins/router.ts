@@ -32,16 +32,40 @@ const routes: Array<RouteConfig> = [
     component: () => import('../../views/Orders.vue'),
     children: [
       {
-        path: '/orders/buy',
-        name: 'OrderBuy',
-        component: () => import('../../components/orders/orderBuy.vue'),
+        path: '/orders/detail',
+        name: 'OrderDetail',
+        component: () => import('@/components/orders/orderDetail/orderDetail.vue'),
+        children: [
+          {
+            path: '/orders/detail/buy',
+            name: 'OrderBuy',
+            component: () => import('../../components/orders/orderDetail/orderBuy.vue'),
+          },
+          {
+            path: '/orders/detail/rent',
+            name: 'OrderRent',
+            component: () => import('../../components/orders/orderDetail/orderRent.vue'),
+          },
+        ],
       },
       {
-        path: '/orders/rent',
-        name: 'OrderRent',
-        component: () => import('../../components/orders/orderRent.vue'),
+        path: '/orders/opt',
+        name: 'OrderOpt',
+        component: () => import('@/components/orders/orderOpt/orderOpt.vue'),
+        children: [
+          {
+            path: '/orders/opt/create',
+            name: 'OrderOptCreate',
+            component: () => import('@/components/orders/orderOpt/createOrder.vue'),
+          },
+        ],
       },
     ],
+  },
+  {
+    path: '/pay',
+    name: 'PayGateWay',
+    component: () => import('@/components/orders/payGateWay.vue'),
   },
   {
     path: '/buyCar',

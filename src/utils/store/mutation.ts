@@ -5,17 +5,22 @@ import { CartProp } from '@/utils/store/state';
 import { GoodProp } from '@/utils/http/good/goodList';
 import { UserAdress } from '@/utils/http/user/addNewAddress';
 import router, { afterLoginPage } from '@/utils/plugins/router';
+import { initUserAddressList } from '@/utils/userAddressInit';
+import { initUserCarts } from '@/utils/initUserCart';
 
 const mutations: MutationTree<State> = {
   login(state: State, userInfo: UserInfo | null) {
     if (userInfo !== null) {
       window.localStorage.setItem('userInfo', JSON.stringify(userInfo));
+      initUserAddressList();
+      initUserCarts();
     } else {
       window.localStorage.removeItem('userInfo');
       if (afterLoginPage.includes(router.app.$route.name ?? '*')) {
         router.push({ name: 'Home' }).then();
       }
     }
+
     state.userInfo = userInfo;
   },
   searchGood(state: State, content: string) {
@@ -43,6 +48,7 @@ const mutations: MutationTree<State> = {
           num: 1,
           orderType: 'buy',
         };
+        console.log('isNerGood: ', isNewGood);
         state.cartGoods.unshift(item);
       }
       localStorage.setItem(`${state.userInfo?.email}-cart`, JSON.stringify(state.cartGoods));
@@ -63,6 +69,7 @@ const mutations: MutationTree<State> = {
       const items = localStorage.getItem(`${state.userInfo?.email}-cart`);
       if (items) {
         state.cartGoods = JSON.parse(items);
+        console.log('init carts: ', state.cartGoods);
       }
     } else if (payload.method === 4) {
       // change type
@@ -90,6 +97,8 @@ const mutations: MutationTree<State> = {
         rentMoney += state.cartGoods[i].num * state.cartGoods[i].rent;
       }
     }
+    console.log('buy: ', buyMoney);
+    console.log('rent: ', rentMoney);
     state.cartBuyMoney = buyMoney;
     state.cartRentMoney = rentMoney;
   },
@@ -121,6 +130,14 @@ const mutations: MutationTree<State> = {
         }
       }
     }
+  },
+  /**
+   * 更新传输的订单数据（购物车页-> 创建订单页
+   * @param cartData
+   */
+  updateOrdersCreateData(state: State, cartData: CartProp[]) {
+    state.ordersCreateData = cartData;
+    console.log(state.ordersCreateData);
   },
 };
 

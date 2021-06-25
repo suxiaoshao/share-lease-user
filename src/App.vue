@@ -10,7 +10,9 @@ export default Vue.extend({
 });
 </script>
 <style lang="scss">
-html,
+html {
+  overflow-y: auto;
+}
 body,
 #app {
   overflow: hidden !important;

@@ -1,37 +1,55 @@
 <template>
   <div class="good-main">
-    <v-container>
-      <v-card class="mx-auto">
-        <v-img contain class="white--text align-end" height="300px" :src="goodInfo.picUrl">
-          <v-card-title>{{ goodInfo.name }}</v-card-title>
-        </v-img>
-        <v-card-subtitle class="pb-0">
-          {{ goodInfo.info }}
-        </v-card-subtitle>
-        <v-card-text class="text--primary">
-          <v-row align="center">
-            <v-col cols="13" class="title">
-              <div>
-                售价： <strong>￥{{ goodInfo.price }}</strong>
-              </div>
-              <div>类型： {{ goodInfo.type }}</div>
+    <v-card class="mx-auto" dark>
+      <v-img :src="goodInfo.picUrl" max-height="500px"></v-img>
 
-              <div>
-                租金：<strong>￥{{ goodInfo.rent }}</strong>
-              </div>
-            </v-col>
-            <v-col cols="1">
-              <v-btn color="orange" class="white--text" fab right top>
-                <v-icon @click="addToCart">mdi-cart</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-card-text>
+      <v-card-title> {{ goodInfo.name }} </v-card-title>
 
-        <v-card-actions></v-card-actions>
-      </v-card>
-      <!-- 如果以后有其他接口再写在这下面 -->
-    </v-container>
+      <v-card-subtitle> 店铺：【{{ goodInfo.merchant.name }}】 {{ goodInfo.merchant.info }}</v-card-subtitle>
+
+      <v-card-text>
+        <p>商品简介：{{ goodInfo.info }}</p>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-btn text>
+          <v-icon>{{ 'mdi-currency-cny' }}</v-icon>
+          价格：{{ goodInfo.price }}
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn color="orange" @click="addToCart">
+          <v-icon @click="addToCart">mdi-cart</v-icon>
+        </v-btn>
+      </v-card-actions>
+
+      <v-card-actions v-for="item in goodInfo.rents" :key="item.rid">
+        <v-btn text>
+          <v-icon @click="addToCart">mdi-currency-cny</v-icon>
+          租金：{{ item.rent }}
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn text>
+          <v-icon @click="addToCart">mdi-currency-cny</v-icon>
+          定金：{{ item.pledge }}
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn text>租用时间： {{ item.time / 60 / 60 / 24 }}天</v-btn>
+        <v-spacer></v-spacer>
+        <v-btn color="success">
+          <v-icon @click="addToCart">mdi-cart</v-icon>
+        </v-btn>
+      </v-card-actions>
+
+      <v-expand-transition>
+        <div>
+          <v-divider></v-divider>
+
+          <v-card-text>
+            <p>类型： {{ goodInfo.type }}</p>
+          </v-card-text>
+        </div>
+      </v-expand-transition>
+    </v-card>
   </div>
 </template>
 
@@ -113,6 +131,5 @@ export default Vue.extend<GoodMainState, GoodMainMethod, {}, {}>({
 .good-main {
   width: 100%;
   height: 100%;
-  background-color: #a12a;
 }
 </style>
